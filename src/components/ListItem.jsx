@@ -1,10 +1,19 @@
-import React from 'react'
+import React from 'react';
+import style from './ListItem.module.scss';
 
-function ListItem() {
+function ListItem(props) {
+
+  const deleteItem = () => {
+    props.deleteToDo();
+  }
+
   return (
-    <div>
-      
-    </div>
+    <section className={style.list_item}>
+      <input type='checkbox' />
+      <input type='text' />
+      <button type='button'>edit</button>
+      <button type='button' onClick={deleteItem}>delete</button>
+    </section>
   )
 }
 
