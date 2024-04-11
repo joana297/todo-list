@@ -1,10 +1,11 @@
-import React from 'react'
+import React from 'react';
+import style from './ListItem.module.scss';
 
 function ListWrapper() {
   return (
-    <div>
-      
-    </div>
+    <section>
+      <input type='text' />
+    </section>
   )
 }
 
