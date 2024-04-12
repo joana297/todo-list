@@ -1,10 +1,29 @@
 @import '../style.scss';
 
-section.list_item {
-    background-color: $white;
+section.list_item_wrapper {
     width: 100%;
     height: auto;
-    margin: 0.5rem 0;
-    box-shadow: 1px 1px 4px 0 rgba(0, 0, 0, 0.15);
-    border-radius: 6px;
+    background-image: url('../images/list-mid.svg');
+    background-repeat: no-repeat;
+    background-size: cover;
+    padding: 0.5rem;
+    margin-top: -1px;
+
+    .list_item {
+        display: flex;
+        justify-content: space-between;
+        border-bottom: 1px solid black;
+        padding: 0.5rem 0;
+        column-gap: 1rem;
+
+        input[type="text"] {
+            font-size: $font-size-h5;
+        }
+
+        .btn_group {
+            display: flex;
+            flex-flow: row nowrap;
+            column-gap: 0.25rem;
+        }
+    }
 }

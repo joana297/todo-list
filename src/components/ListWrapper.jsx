@@ -28,7 +28,10 @@ function ListWrapper(props) {
       </section>
       :
       <section className={style.list_wrapper}>
-        <input className={style.list_title} type='text' value={listTitle} onChange={changeTitle} />
+        <div className={style.list_title_wrapper}>
+          <input className={style.list_title} type='text' value={listTitle} onChange={changeTitle} />
+        </div>
+
         {listItems.map((item, key) => {
           return <ListItem key={key} deleteToDo={() => deleteToDo(key)} />
         })}
