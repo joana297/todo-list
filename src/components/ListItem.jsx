@@ -1,15 +1,16 @@
-import React from 'react';
+import React, { useState } from 'react';
 import style from './ListItem.module.scss';
 import Notification from './Notification';
 
 function ListItem(props) {
+  const [notifications, setNotifications] = useState([]);
 
   const deleteItem = () => {
     props.deleteToDo();
   }
 
   const addNotification = () => {
-
+    setNotifications([...notifications, 1]);
   }
 
   return (
@@ -35,7 +36,9 @@ function ListItem(props) {
           </button>
         </section>
       </section>
-      <Notification />
+      {notifications.map(item => {
+        return <Notification />
+      })}
     </section>
 
   )

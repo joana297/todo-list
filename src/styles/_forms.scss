@@ -1,9 +1,14 @@
 input[type="text"] {
     width: 100%;
-    border-radius: 6px;
+    border-radius: 7px;
     border: none;
     background-color: transparent;
     font-family: $font-family-default;
+    padding: 6px 0.5rem 4px;
+
+    &:focus-visible {
+        outline: 1px solid rgba(0, 0, 0, 0.1);
+    }
 }
 
 button {
