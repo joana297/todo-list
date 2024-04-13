@@ -15,15 +15,42 @@ section.list_item_wrapper {
         border-bottom: 1px solid black;
         padding: 0.5rem 0;
         column-gap: 1rem;
+        align-items: center;
 
         input[type="text"] {
             font-size: $font-size-h5;
+            position: relative;
+        }
+
+        .line {
+            width: 100%;
+            position: absolute;
+            left: 0;
+            top: 50%;
+            transform: translateY(-50%);
+            border-bottom: 2px solid red;
+            display: none;
         }
 
         .btn_group {
             display: flex;
             flex-flow: row nowrap;
             column-gap: 0.25rem;
+        }
+
+        input[type='checkbox']:checked {
+            +div.title {
+                position: relative;
+                width: 100%;
+
+                .line {
+                    display: block;
+                }
+
+                +section.btn_group button.alarm {
+                    display: none;
+                }
+            }
         }
     }
 }

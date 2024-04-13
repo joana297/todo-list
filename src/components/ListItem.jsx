@@ -1,5 +1,6 @@
 import React from 'react';
 import style from './ListItem.module.scss';
+import Notification from './Notification';
 
 function ListItem(props) {
 
@@ -8,27 +9,33 @@ function ListItem(props) {
   }
 
   const addNotification = () => {
-    
+
   }
 
   return (
     <section className={style.list_item_wrapper}>
-      <div className={style.list_item}>
+      <section className={style.list_item}>
         <input type='checkbox' />
-        <input type='text' />
-        <div className={style.btn_group}>
-          <button type='button' onClick={addNotification}>
-            <span class="material-symbols-rounded">
+
+        <div className={style.title}>
+          <input type='text' />
+          <span className={style.line} />
+        </div>
+
+        <section className={style.btn_group}>
+          <button type='button' className={style.alarm} onClick={addNotification}>
+            <span className="material-symbols-rounded">
               alarm
             </span>
           </button>
           <button type='button' onClick={deleteItem}>
-            <span class="material-symbols-rounded">
+            <span className="material-symbols-rounded">
               delete
             </span>
           </button>
-        </div>
-      </div>
+        </section>
+      </section>
+      <Notification />
     </section>
 
   )
