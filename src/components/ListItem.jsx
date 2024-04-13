@@ -13,6 +13,10 @@ function ListItem(props) {
     setNotifications([...notifications, 1]);
   }
 
+  const deleteNotification = (key) => {
+    setNotifications(notifications.filter((item, index) => index !== key));
+  }
+
   return (
     <section className={style.list_item_wrapper}>
       <section className={style.list_item}>
@@ -36,8 +40,8 @@ function ListItem(props) {
           </button>
         </section>
       </section>
-      {notifications.map(item => {
-        return <Notification />
+      {notifications.map((item, key) => {
+        return <Notification deleteItem={() => deleteNotification(key)} />
       })}
     </section>
 

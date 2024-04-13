@@ -11,7 +11,7 @@ section.list_item_wrapper {
     transition: 0.2s ease;
 
     &:hover {
-        background-color: #0000001a;
+        background-color: rgba(0, 0, 0, 0.05);
         background-blend-mode: multiply;
     }
 
