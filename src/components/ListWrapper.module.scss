@@ -11,6 +11,19 @@ section.list_wrapper {
         background-size: cover;
         padding: 3.5rem 0.5rem 0.5rem;
 
+        &:after {
+            content: "";
+            display: block;
+            width: 100%;
+            height: 10px;
+            background: linear-gradient(rgba(0, 0, 0, 0.1) 0%, rgba(0, 0, 0, 0) 100%);
+            position: absolute;
+            z-index: 20;
+            left: 0;
+            bottom: 0;
+            transform: translateY(100%);
+        }
+
         input {
             &.list_title {
                 font-size: $font-size-h3;
@@ -20,15 +33,33 @@ section.list_wrapper {
         }
     }
 
+    .list_item_wrapper {
+        max-height: calc(100vh - 21rem);
+        overflow-y: scroll;
+    }
+
     .list_bottom_wrapper {
         background-image: url('../images/list-bottom.svg');
         background-repeat: no-repeat;
         background-size: cover;
         background-position-y: bottom;
-        padding: 0 0.5rem 1.5rem;
+        padding: 0.5rem 0.5rem 1.5rem;
         margin-top: -1px;
         display: flex;
         justify-content: center;
+
+        &:before {
+            content: "";
+            display: block;
+            width: 100%;
+            height: 10px;
+            background: linear-gradient(rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0.1) 100%);
+            position: absolute;
+            z-index: 20;
+            left: 0;
+            top: 0;
+            transform: translateY(-100%);
+        }
 
         i {
             font-size: $font-size-h1;

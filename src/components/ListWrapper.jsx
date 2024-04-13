@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import style from './ListWrapper.module.scss';
 import ListItem from './ListItem';
 
@@ -32,9 +32,11 @@ function ListWrapper(props) {
           <input className={style.list_title} type='text' value={listTitle} onChange={changeTitle} />
         </section>
 
-        {listItems.map((item, key) => {
-          return <ListItem key={key} deleteToDo={() => deleteToDo(key)} />
-        })}
+        <section className={style.list_item_wrapper}>
+          {listItems.map((item, key) => {
+            return <ListItem key={key} deleteToDo={() => deleteToDo(key)} />
+          })}
+        </section>
 
         <section className={style.list_bottom_wrapper}>
           <i onClick={addToDo} className="material-symbols-rounded">
