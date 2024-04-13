@@ -28,16 +28,19 @@ function ListWrapper(props) {
       </section>
       :
       <section className={style.list_wrapper}>
-        <div className={style.list_title_wrapper}>
+        <section className={style.list_title_wrapper}>
           <input className={style.list_title} type='text' value={listTitle} onChange={changeTitle} />
-        </div>
+        </section>
 
         {listItems.map((item, key) => {
           return <ListItem key={key} deleteToDo={() => deleteToDo(key)} />
         })}
-        <i onClick={addToDo} className="material-symbols-rounded">
-          add
-        </i>
+
+        <section className={style.list_bottom_wrapper}>
+          <i onClick={addToDo} className="material-symbols-rounded">
+            add
+          </i>
+        </section>
       </section>
   )
 }
