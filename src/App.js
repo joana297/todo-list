@@ -8,7 +8,7 @@ export default function App() {
   }
 
   function getHello() {
-    axios.get('http://localhost:8080/hello').then((res) => {
+    axios.get('http://localhost:8080/').then((res) => {
       console.log(res.data);
     });
   }
