@@ -3,6 +3,8 @@ import style from './ListItem.module.scss';
 import Notification from './Notification';
 
 function ListItem(props) {
+  //const { activeOrder, getOrders, allOrdersDisplayed } = props;
+
   const [notifications, setNotifications] = useState([]);
 
   const deleteItem = () => {
@@ -11,6 +13,18 @@ function ListItem(props) {
 
   const addNotification = () => {
     setNotifications([...notifications, 1]);
+    /*{
+      customerNumber: customerNumber,
+      company: company,
+      description: description,
+      person: {
+          firstName: firstname,
+          lastName: lastname
+      },
+      email: email,
+      phoneNumber: phone
+  },
+  { headers: { 'Content-Type': 'application/json' } }*/
   }
 
   const deleteNotification = (key) => {

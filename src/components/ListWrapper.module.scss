@@ -35,6 +35,7 @@ section.list_wrapper {
     }
 
     .list_item_wrapper {
+        width: 20rem;
         max-height: calc(100vh - 21rem);
         overflow-y: scroll;
     }

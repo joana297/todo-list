@@ -1,14 +1,43 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import ListWrapper from "./components/ListWrapper";
 import axios from 'axios';
 
 export default function App() {
-  const addNewList = () => {
-    console.log("neue Liste erstellt");
+  const [lists, setLists] = useState([]);
+
+  useEffect(() => {
+    getLists();
+  }, []);
+
+  const getLists = () => {
+    axios.get('http://localhost:8080/api/lists').then((res) => {
+      setLists(res.data);
+    });
   }
 
+  const addList = async () => {
+    await axios.post('http://localhost:8080/api/lists',
+      {
+        title: "My new List"
+      },
+      { headers: { 'Content-Type': 'application/json' } }).then(res => {
+        getLists();
+      });
+  }
+
+  const deleteList = async (id) => {
+    await axios.delete('http://localhost:8080/api/lists/' + id).then((res) => {
+      console.log(res.data);
+    }).then(res => {
+      getLists();
+    });
+  }
+
+
+
+  //kommt noch weg
   function getHello() {
-    axios.get('http://localhost:8080/').then((res) => {
+    axios.get('http://localhost:8080/api/lists').then((res) => {
       console.log(res.data);
     });
   }
@@ -22,8 +51,16 @@ export default function App() {
         </i>
       </header>
       <main>
-        <ListWrapper />
-        <ListWrapper new addNewList={addNewList} />
+        <section className="overflow_container">
+          {lists.map((list, key) => {
+            return (
+              <ListWrapper key={key} list={list} deleteFct={deleteList} />
+            )
+          })}
+
+          <p onClick={addList}>add new list + </p>
+          {/*<ListWrapper new addNewList={addNewList} />*/}
+        </section>
       </main>
     </>
   );
