@@ -4,7 +4,7 @@ import ListItem from './ListItem';
 import axios from 'axios';
 
 function ListWrapper(props) {
-  const [listTitle, setListTitle] = useState("My List");
+  const [listTitle, setListTitle] = useState("");
   const [listItems, setListItems] = useState([]);
 
   useEffect(() => {
@@ -26,22 +26,27 @@ function ListWrapper(props) {
   }
 
   const getListItems = () => {
-    axios.get('http://localhost:8080/api/lists/' + props.list.id).then((res) => {
+    axios.get('http://localhost:8080/api/lists/' + props.list.id + '/todos').then((res) => {
       setListItems(res.data);
     });
   }
 
-  
-
-
-
-  //kommt noch weg
-  const addToDo = () => {
-    setListItems([...listItems, 2]);
+  const addListItem = async() => {
+    await axios.post('http://localhost:8080/api/lists/' + props.list.id + '/todos',
+      {
+        text: "My new Todo"
+      },
+      { headers: { 'Content-Type': 'application/json' } }).then(res => {
+        getListItems();
+      });
   }
 
-  const deleteToDo = (key) => {
-    setListItems(listItems.filter((item, index) => index !== key));
+  const deleteListItem = async (id) => {
+    await axios.delete('http://localhost:8080/api/lists/' + props.list.id + '/todos/' + id).then((res) => {
+      console.log(res.data);
+    }).then(res => {
+      getListItems();
+    });
   }
 
   return (
@@ -65,12 +70,12 @@ function ListWrapper(props) {
 
         <section className={style.list_item_wrapper}>
           {listItems.map((item, key) => {
-            return <ListItem key={key} item={item} deleteToDo={() => deleteToDo(key)} />
+            return <ListItem key={key} todo={item} deleteFct={deleteListItem} />
           })}
         </section>
 
         <section className={style.list_bottom_wrapper}>
-          <i onClick={addToDo} className="material-symbols-rounded">
+          <i onClick={addListItem} className="material-symbols-rounded">
             add
           </i>
         </section>

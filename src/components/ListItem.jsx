@@ -1,34 +1,52 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import style from './ListItem.module.scss';
 import Notification from './Notification';
+import axios from 'axios';
 
 function ListItem(props) {
-  //const { activeOrder, getOrders, allOrdersDisplayed } = props;
-
+  const [todoText, setTodoText] = useState("");
   const [notifications, setNotifications] = useState([]);
 
-  const deleteItem = () => {
-    props.deleteToDo();
-  }
+  useEffect(() => {
+    getNotifications();
+  }, []);
 
-  const addNotification = () => {
-    setNotifications([...notifications, 1]);
-    /*{
-      customerNumber: customerNumber,
-      company: company,
-      description: description,
-      person: {
-          firstName: firstname,
-          lastName: lastname
+  useEffect(() => {
+    setTodoText(props.todo.text);
+  }, [props.todo]);
+
+  const updateTodoText = async (e) => {
+    await axios.patch('http://localhost:8080/api/lists/' + props.todo.list_id + '/todos/' + props.todo.id,
+      {
+        text: e.target.value
       },
-      email: email,
-      phoneNumber: phone
-  },
-  { headers: { 'Content-Type': 'application/json' } }*/
+      { headers: { 'Content-Type': 'application/json' } }).then((res) => {
+        console.log(res.data);
+      });
   }
 
-  const deleteNotification = (key) => {
-    setNotifications(notifications.filter((item, index) => index !== key));
+  const getNotifications = () => {
+    axios.get('http://localhost:8080/api/lists/' + props.todo.list_id + '/todos/' + props.todo.id + '/notifications').then((res) => {
+      setNotifications(res.data);
+    });
+  }
+
+  const addNotification = async() => {
+    await axios.post('http://localhost:8080/api/lists/' + props.todo.list_id + '/todos/' + props.todo.id + '/notifications',
+      {
+        date_time: "My new notification"
+      },
+      { headers: { 'Content-Type': 'application/json' } }).then(res => {
+        getNotifications();
+      });
+  }
+
+  const deleteNotification = async (id) => {
+    await axios.delete('http://localhost:8080/api/lists/' + props.todo.list_id + '/todos/' + props.todo.id + '/notifications/' + id).then((res) => {
+      console.log(res.data);
+    }).then(res => {
+      getNotifications();
+    });
   }
 
   return (
@@ -37,7 +55,10 @@ function ListItem(props) {
         <input type='checkbox' />
 
         <div className={style.title}>
-          <input type='text' />
+          <input type='text' 
+          value={todoText}
+          onChange={(e) => setTodoText(e.target.value)}
+          onBlur={updateTodoText}/>
           <span className={style.line} />
         </div>
 
@@ -47,7 +68,7 @@ function ListItem(props) {
               alarm
             </span>
           </button>
-          <button type='button' onClick={deleteItem}>
+          <button type='button' onClick={() => props.deleteFct(props.todo.id)}>
             <span className="material-symbols-rounded">
               delete
             </span>
@@ -55,7 +76,7 @@ function ListItem(props) {
         </section>
       </section>
       {notifications.map((item, key) => {
-        return <Notification deleteItem={() => deleteNotification(key)} />
+        return <Notification key={key} notification={item} deleteFct={deleteNotification} />
       })}
     </section>
 
