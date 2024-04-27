@@ -1,0 +1,12 @@
+@import '../style.scss';
+
+.todo_wrapper {
+    background-color: #fff;
+    border-radius: 10px;
+    padding: 1rem;
+    box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.5);
+
+    h4 {
+        font-family: $font-family-default;
+    }
+}

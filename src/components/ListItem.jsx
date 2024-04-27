@@ -9,7 +9,7 @@ function ListItem(props) {
 
   useEffect(() => {
     getNotifications();
-  }, []);
+  }, [props.todo]);
 
   useEffect(() => {
     setTodoText(props.todo.text);
