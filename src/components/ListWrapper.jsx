@@ -31,7 +31,7 @@ function ListWrapper(props) {
     });
   }
 
-  const addListItem = async() => {
+  const addListItem = async () => {
     await axios.post('http://localhost:8080/api/lists/' + props.list.id + '/todos',
       {
         text: "My new Todo"
@@ -65,7 +65,12 @@ function ListWrapper(props) {
             value={listTitle}
             onChange={(e) => setListTitle(e.target.value)}
             onBlur={updateListTitle} />
-          <p onClick={() => props.deleteFct(props.list.id)}>delete list</p>
+
+          <button type='button' onClick={() => props.deleteFct(props.list.id)}>
+            <span className="material-symbols-rounded">
+              delete
+            </span>
+          </button>
         </section>
 
         <section className={style.list_item_wrapper}>

@@ -6,6 +6,8 @@ section.list_wrapper {
     filter: drop-shadow(2px 2px 7px #00000080);
 
     .list_title_wrapper {
+        display: flex;
+        align-items: center;
         background-image: url('../images/list-top.svg');
         background-repeat: no-repeat;
         background-size: cover;
@@ -23,6 +25,10 @@ section.list_wrapper {
             bottom: 0;
             transform: translateY(100%);
             border-radius: 15px;
+        }
+
+        button {
+            height: fit-content;
         }
 
         input {
