@@ -8,7 +8,6 @@ export default function NotificationMessage(props) {
     const [todo, setTodo] = useState({});
 
     useEffect(() => {
-        console.log(props.notification);
         axios.get('http://localhost:8080/api/lists/' + props.notification.list_id).then((res) => {
             setList(res.data[0]);
         });

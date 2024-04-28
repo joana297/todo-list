@@ -2,12 +2,14 @@ import React, { useEffect, useState, useRef } from "react";
 import ListWrapper from "./components/ListWrapper";
 import axios from 'axios';
 import NotificationMessage from "./components/NotificationMessage";
+import Swal from 'sweetalert2';
 
 export default function App() {
   const [lists, setLists] = useState([]);
   const [notifications, setNotifications] = useState([]);
   const [notificationsOpen, setNotificationsOpen] = useState(false);
   const ref = useRef();
+  const btn = useRef();
 
   useEffect(() => {
     getLists();
@@ -50,8 +52,26 @@ export default function App() {
   const deleteList = async (id) => {
     await axios.delete('http://localhost:8080/api/lists/' + id).then((res) => {
       console.log(res.data);
-    }).then(res => {
       getLists();
+    });
+  }
+
+  const deleteAllNotifications = () => {
+    Swal.fire({
+      position: 'center',
+      icon: 'warning',
+      title: 'Bist du sicher, dass alle Erinnerungen gelöscht werden sollen',
+      confirmButtonText: 'Ja',
+      denyButtonText: 'Nein',
+      timer: 2000
+    }).then(() => {
+      notifications.map(async notification => {
+        await axios.delete('http://localhost:8080/api/lists/' + notification.list_id + '/todos/' + notification.todo_id + '/notifications/' + notification.id)
+          .then((res) => {
+            console.log(res.data);
+            getNotifications();
+          });
+      });
     });
   }
 
@@ -68,11 +88,16 @@ export default function App() {
     <>
       <header>
         <h1 className='align-center'>My To Do List</h1>
-        <i className={"material-symbols-rounded" + (notificationsOpen ? " open" : " ")} onClick={toggleNotifications} >
+        <i ref={btn} className={"material-symbols-rounded" + (notificationsOpen ? " open" : " ")} onClick={toggleNotifications} >
           notifications
         </i>
         {notificationsOpen ?
           <section ref={ref} className="notification_container">
+            <button type='button' onClick={deleteAllNotifications}>
+              <span className="material-symbols-rounded">
+                delete
+              </span>
+            </button>
             {notifications.length == 0 ?
               <p>Sie haben keine aktuellen Benachrichtigungen</p> :
               notifications.map((item, key) => {
