@@ -9,7 +9,7 @@ function ListWrapper(props) {
 
   useEffect(() => {
     getListItems();
-  }, [props.notification]);
+  }, [props.notifications]);
 
   useEffect(() => {
     setListTitle(props.list.title);

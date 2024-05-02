@@ -1,8 +1,14 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import NotificationMessage from './NotificationMessage';
 import style from './NotificationContainer.module.scss';
 
 function NotificationContainer(props) {
+    const [notifications, setNotifications] = useState([]);
+
+    useEffect(() => {
+        setNotifications(props.notifications);
+    }, [props.notifications]);
+
     return (
         <>
             <button type='button' onClick={() => props.deleteAll()}>
@@ -10,9 +16,9 @@ function NotificationContainer(props) {
                     delete
                 </span>
             </button>
-            {props.notifications.length == 0 ?
+            {notifications.length == 0 ?
                 <p>Sie haben keine aktuellen Benachrichtigungen</p> :
-                props.notifications.map((item, key) => {
+                notifications.map((item, key) => {
                     return (
                         <NotificationMessage key={key} notification={item} />
                     )

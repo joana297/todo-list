@@ -62,30 +62,25 @@ export default function App() {
     Swal.fire({
       position: 'center',
       icon: 'warning',
+      iconColor: '#f98383',
       title: 'Bist du sicher, dass alle Erinnerungen gelöscht werden sollen',
       showConfirmButton: true,
       confirmButtonText: 'Ja',
+      confirmButtonColor: '#bef983',
       showCancelButton: true,
-      denyButtonText: 'Nein',
-      timer: 2000
-    }).then(() => {
-      notifications.map(async notification => {
-        await axios.delete('http://localhost:8080/api/lists/' + notification.list_id + '/todos/' + notification.todo_id + '/notifications/' + notification.id)
-          .then((res) => {
-            console.log(res.data);
-            getNotifications();
-          });
-      });
+      cancelButtonText: 'Nein',
+      cancelButtonColor: '#ff6a6a',
+    }).then((result) => {
+      if (result.isConfirmed) {
+        notifications.map(async notification => {
+          await axios.delete('http://localhost:8080/api/lists/' + notification.list_id + '/todos/' + notification.todo_id + '/notifications/' + notification.id)
+            .then((res) => {
+              console.log(res.data);
+              getNotifications();
+            });
+        });
+      }
     });
-  }
-
-  function toggleNotifications() {
-    if (notificationsOpen) {
-      setNotificationsOpen(false);
-    } else {
-      getNotifications();
-      setNotificationsOpen(true);
-    }
   }
 
   return (
@@ -97,15 +92,15 @@ export default function App() {
         </i>
         {notificationsOpen ?
           <section className='notification_container' ref={ref}>
-            <NotificationContainer notifications={notifications} deleteAll={deleteAllNotifications}/>
+            <NotificationContainer notifications={notifications} deleteAll={deleteAllNotifications} />
           </section>
-           : ""}
+          : ""}
       </header>
       <main>
         <section className="overflow_container">
           {lists.map((list, key) => {
             return (
-              <ListWrapper key={key} list={list} deleteFct={deleteList} />
+              <ListWrapper key={key} list={list} notifications={notifications} deleteFct={deleteList} />
             )
           })}
           <p onClick={addList}>add new list + </p>
