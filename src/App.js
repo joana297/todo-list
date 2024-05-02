@@ -1,15 +1,14 @@
 import React, { useEffect, useState, useRef } from "react";
 import ListWrapper from "./components/lists/ListWrapper";
 import axios from 'axios';
-import NotificationMessage from "./components/NotificationMessage";
 import Swal from 'sweetalert2';
+import NotificationContainer from "./components/notifications/NotificationContainer";
 
 export default function App() {
   const [lists, setLists] = useState([]);
   const [notifications, setNotifications] = useState([]);
   const [notificationsOpen, setNotificationsOpen] = useState(false);
   const ref = useRef();
-  const btn = useRef();
 
   useEffect(() => {
     getLists();
@@ -22,8 +21,11 @@ export default function App() {
   }, []);
 
   const handleClickOutside = (event) => {
-    if (ref.current && !ref.current.contains(event.target)) {
+    if ((!event.target.closest('.notification_container')) || event.target.className == 'material-symbols-rounded notify open') {
       setNotificationsOpen(false);
+    }
+    if (event.target.className == 'material-symbols-rounded notify') {
+      setNotificationsOpen(true);
     }
   };
 
@@ -61,7 +63,9 @@ export default function App() {
       position: 'center',
       icon: 'warning',
       title: 'Bist du sicher, dass alle Erinnerungen gelöscht werden sollen',
+      showConfirmButton: true,
       confirmButtonText: 'Ja',
+      showCancelButton: true,
       denyButtonText: 'Nein',
       timer: 2000
     }).then(() => {
@@ -88,24 +92,14 @@ export default function App() {
     <>
       <header>
         <h1 className='align-center'>My To Do List</h1>
-        <i ref={btn} className={"material-symbols-rounded" + (notificationsOpen ? " open" : " ")} onClick={toggleNotifications} >
+        <i className={"material-symbols-rounded notify" + (notificationsOpen ? " open" : "")} >
           notifications
         </i>
         {notificationsOpen ?
-          <section ref={ref} className="notification_container">
-            <button type='button' onClick={deleteAllNotifications}>
-              <span className="material-symbols-rounded">
-                delete
-              </span>
-            </button>
-            {notifications.length == 0 ?
-              <p>Sie haben keine aktuellen Benachrichtigungen</p> :
-              notifications.map((item, key) => {
-                return (
-                  <NotificationMessage key={key} notification={item} />
-                )
-              })}
-          </section> : ""}
+          <section className='notification_container' ref={ref}>
+            <NotificationContainer notifications={notifications} deleteAll={deleteAllNotifications}/>
+          </section>
+           : ""}
       </header>
       <main>
         <section className="overflow_container">
