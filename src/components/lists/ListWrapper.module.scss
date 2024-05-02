@@ -1,4 +1,4 @@
-@import '../style.scss';
+@import '../../style.scss';
 
 section.list_wrapper {
     width: 20rem;
@@ -8,7 +8,7 @@ section.list_wrapper {
     .list_title_wrapper {
         display: flex;
         align-items: center;
-        background-image: url('../images/list-top.svg');
+        background-image: url('../../images/list-top.svg');
         background-repeat: no-repeat;
         background-size: cover;
         padding: 3.5rem 0.5rem 0.5rem;
@@ -47,7 +47,7 @@ section.list_wrapper {
     }
 
     .list_bottom_wrapper {
-        background-image: url('../images/list-bottom.svg');
+        background-image: url('../../images/list-bottom.svg');
         background-repeat: no-repeat;
         background-size: cover;
         background-position-y: bottom;

@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useRef } from "react";
-import ListWrapper from "./components/ListWrapper";
+import ListWrapper from "./components/lists/ListWrapper";
 import axios from 'axios';
 import NotificationMessage from "./components/NotificationMessage";
 import Swal from 'sweetalert2';
