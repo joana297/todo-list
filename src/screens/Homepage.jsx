@@ -1,10 +1,11 @@
-import React, {useState, useRef, useEffect} from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import axios from 'axios';
 import ListWrapper from '../components/lists/ListWrapper';
+import url from '../BackendURL';
 
 
 function Homepage() {
-    const [lists, setLists] = useState([]);
+  const [lists, setLists] = useState([]);
   const [notifications, setNotifications] = useState([]);
   const [notificationsOpen, setNotificationsOpen] = useState(false);
   const ref = useRef();
@@ -29,19 +30,19 @@ function Homepage() {
   };*/
 
   const getLists = () => {
-    axios.get('http://localhost:8080/api/lists').then((res) => {
+    axios.get(url + '/api/lists').then((res) => {
       setLists(res.data);
     });
   }
 
   const getNotifications = () => {
-    axios.get('http://localhost:8080/api/notifications').then((res) => {
+    axios.get(url + '/api/notifications').then((res) => {
       setNotifications(res.data);
     });
   }
 
   const addList = async () => {
-    await axios.post('http://localhost:8080/api/lists',
+    await axios.post(url + '/api/lists',
       {
         title: "My new List"
       },
@@ -51,22 +52,25 @@ function Homepage() {
   }
 
   const deleteList = async (id) => {
-    await axios.delete('http://localhost:8080/api/lists/' + id).then((res) => {
+    await axios.delete(url + '/api/lists/' + id).then((res) => {
       console.log(res.data);
       getLists();
     });
   }
-    return (
-        <section className="overflow_container">
-            {lists.map((list, key) => {
-                return (
-                    <ListWrapper key={key} list={list} notifications={notifications} deleteFct={deleteList} />
-                )
-            })}
-            <p onClick={addList}>add new list + </p>
-            {/*<ListWrapper new addNewList={addNewList} />*/}
-        </section>
-    )
+  return (
+    <>
+      <h1>My Todo App</h1>
+      <section className="overflow_container">
+        {lists.map((list, key) => {
+          return (
+            <ListWrapper key={key} list={list} notifications={notifications} deleteFct={deleteList} />
+          )
+        })}
+        <p onClick={addList}>add new list + </p>
+        {/*<ListWrapper new addNewList={addNewList} />*/}
+      </section>
+    </>
+  )
 }
 
 export default Homepage

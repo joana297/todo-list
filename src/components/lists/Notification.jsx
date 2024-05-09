@@ -1,10 +1,11 @@
 import React from 'react';
 import style from './Notification.module.scss';
 import axios from 'axios';
+import url from '../../BackendURL';
 
 function Notification(props) {
   const updateNotification = async (e) => {
-    await axios.patch('http://localhost:8080/api/lists/' + props.todo.list_id + '/todos/' + props.todo.id,
+    await axios.patch(url + '/api/lists/' + props.todo.list_id + '/todos/' + props.todo.id,
       {
         text: e.target.value
       },

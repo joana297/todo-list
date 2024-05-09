@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import style from './NotificationMessage.module.scss';
 import axios from 'axios';
+import url from '../../BackendURL';
 
 export default function NotificationMessage(props) {
 
@@ -9,10 +10,10 @@ export default function NotificationMessage(props) {
     const [notification, setNotification] = useState({});
 
     useEffect(() => {
-        axios.get('http://localhost:8080/api/lists/' + props.notification.list_id).then((res) => {
+        axios.get(url + '/api/lists/' + props.notification.list_id).then((res) => {
             setList(res.data[0]);
         });
-        axios.get('http://localhost:8080/api/lists/' + props.notification.list_id + '/todos/' + props.notification.todo_id).then((res) => {
+        axios.get(url + '/api/lists/' + props.notification.list_id + '/todos/' + props.notification.todo_id).then((res) => {
             setTodo(res.data[0]);
         });
         setNotification(props.notification);

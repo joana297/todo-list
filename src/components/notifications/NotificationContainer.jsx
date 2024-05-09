@@ -3,6 +3,7 @@ import axios from 'axios';
 import Swal from 'sweetalert2';
 import NotificationMessage from './NotificationMessage';
 import style from './NotificationContainer.module.scss';
+import url from '../../BackendURL';
 
 function NotificationContainer() {
 
@@ -16,7 +17,7 @@ function NotificationContainer() {
    * gets all expired notifications from db
    */
   const getNotifications = () => {
-    axios.get('http://localhost:8080/api/notifications').then((res) => {
+    axios.get(url + '/api/notifications').then((res) => {
       setNotifications(res.data);
     });
   }
@@ -39,7 +40,7 @@ function NotificationContainer() {
     }).then((result) => {
       if (result.isConfirmed) {
         notifications.map(async notification => {
-          await axios.delete('http://localhost:8080/api/lists/' + notification.list_id + '/todos/' + notification.todo_id + '/notifications/' + notification.id)
+          await axios.delete(url + '/api/lists/' + notification.list_id + '/todos/' + notification.todo_id + '/notifications/' + notification.id)
             .then((res) => {
               console.log(res.data);
               getNotifications();
@@ -53,7 +54,7 @@ function NotificationContainer() {
    * deletes an expired notification by its id
    */
   const deleteNotification = async (notification) => {
-    await axios.delete('http://localhost:8080/api/lists/' + notification.list_id + '/todos/' + notification.todo_id + '/notifications/' + notification.id)
+    await axios.delete(url + '/api/lists/' + notification.list_id + '/todos/' + notification.todo_id + '/notifications/' + notification.id)
       .then((res) => {
         console.log(res.data);
         getNotifications();

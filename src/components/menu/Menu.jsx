@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import style from './Menu.module.scss';
 import { Link, NavLink, useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import url from '../../BackendURL';
 
 function Menu(props) {
   const [lists, setLists] = useState([]);
@@ -15,7 +16,7 @@ function Menu(props) {
    * gets all lists from db
    */
   const getAllLists = () => {
-    axios.get('http://localhost:8080/api/lists').then((res) => {
+    axios.get(url + '/api/lists').then((res) => {
       setLists(res.data);
     });
   }
@@ -41,7 +42,7 @@ function Menu(props) {
     <section className={style.menu_wrapper + ' ' + (props.menuOpen ? style.open : '')}>
       <nav>
         <div className={style.menu_header}>
-          <h2 onClick={openHomepage}>My Lists</h2>
+          <h2 onClick={openHomepage}>Home</h2>
           <i className={'material-symbols-rounded ' + style.icon} onClick={() => props.toggle()}>
             close
           </i>

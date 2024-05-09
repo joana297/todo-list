@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import style from './ListItem.module.scss';
 import Notification from './Notification';
 import axios from 'axios';
+import url from '../../BackendURL';
 
 function ListItem(props) {
   const [todoText, setTodoText] = useState("");
@@ -16,7 +17,7 @@ function ListItem(props) {
   }, [props.todo]);
 
   const updateTodoText = async (e) => {
-    await axios.patch('http://localhost:8080/api/lists/' + props.todo.list_id + '/todos/' + props.todo.id,
+    await axios.patch(url + '/api/lists/' + props.todo.list_id + '/todos/' + props.todo.id,
       {
         text: e.target.value
       },
@@ -26,13 +27,13 @@ function ListItem(props) {
   }
 
   const getNotifications = () => {
-    axios.get('http://localhost:8080/api/lists/' + props.todo.list_id + '/todos/' + props.todo.id + '/notifications').then((res) => {
+    axios.get(url + '/api/lists/' + props.todo.list_id + '/todos/' + props.todo.id + '/notifications').then((res) => {
       setNotifications(res.data);
     });
   }
 
   const addNotification = async() => {
-    await axios.post('http://localhost:8080/api/lists/' + props.todo.list_id + '/todos/' + props.todo.id + '/notifications',
+    await axios.post(url + '/api/lists/' + props.todo.list_id + '/todos/' + props.todo.id + '/notifications',
       {
         date_time: "My new notification"
       },
@@ -42,7 +43,7 @@ function ListItem(props) {
   }
 
   const deleteNotification = async (id) => {
-    await axios.delete('http://localhost:8080/api/lists/' + props.todo.list_id + '/todos/' + props.todo.id + '/notifications/' + id).then((res) => {
+    await axios.delete(url + '/api/lists/' + props.todo.list_id + '/todos/' + props.todo.id + '/notifications/' + id).then((res) => {
       console.log(res.data);
     }).then(res => {
       getNotifications();

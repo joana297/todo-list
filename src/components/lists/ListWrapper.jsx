@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import style from './ListWrapper.module.scss';
 import ListItem from './ListItem';
 import axios from 'axios';
+import url from '../../BackendURL';
 
 function ListWrapper(props) {
   const [listTitle, setListTitle] = useState("");
@@ -16,7 +17,7 @@ function ListWrapper(props) {
   }, [props.list]);
 
   const updateListTitle = async (e) => {
-    await axios.patch('http://localhost:8080/api/lists/' + props.list.id,
+    await axios.patch(url + '/api/lists/' + props.list.id,
       {
         title: e.target.value
       },
@@ -26,13 +27,13 @@ function ListWrapper(props) {
   }
 
   const getListItems = () => {
-    axios.get('http://localhost:8080/api/lists/' + props.list.id + '/todos').then((res) => {
+    axios.get(url + '/api/lists/' + props.list.id + '/todos').then((res) => {
       setListItems(res.data);
     });
   }
 
   const addListItem = async () => {
-    await axios.post('http://localhost:8080/api/lists/' + props.list.id + '/todos',
+    await axios.post(url + '/api/lists/' + props.list.id + '/todos',
       {
         text: "My new Todo"
       },
@@ -42,7 +43,7 @@ function ListWrapper(props) {
   }
 
   const deleteListItem = async (id) => {
-    await axios.delete('http://localhost:8080/api/lists/' + props.list.id + '/todos/' + id).then((res) => {
+    await axios.delete(url + '/api/lists/' + props.list.id + '/todos/' + id).then((res) => {
       console.log(res.data);
     }).then(res => {
       getListItems();
