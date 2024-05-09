@@ -9,20 +9,20 @@ import Homepage from "./screens/Homepage";
 import Detailpage from "./screens/Detailpage";
 
 export default function App() {
-  
+
 
   return (
     <>
-      <Layout>
-        <BrowserRouter>
+      <BrowserRouter>
+        <Layout>
           <Routes>
             <Route path="/">
               <Route index element={<Homepage />} />
               <Route path="list/:id" element={<Detailpage />} />
             </Route>
           </Routes>
-        </BrowserRouter>
-      </Layout>
+        </Layout>
+      </BrowserRouter>
     </>
   );
 }

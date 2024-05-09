@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import style from './Menu.module.scss';
-import { Link, NavLink } from 'react-router-dom';
+import { Link, NavLink, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 
 function Menu(props) {
   const [lists, setLists] = useState([]);
+  const navigate = useNavigate();
 
   useEffect(() => {
     getAllLists();
@@ -19,11 +20,28 @@ function Menu(props) {
     });
   }
 
+  /**
+   * navigates to the list detailpage & closes menu
+   * @param {*} list 
+   */
+  const openDetailpage = (list) => {
+    navigate('list/' + list.id);
+    props.toggle();
+  }
+
+  /**
+   * navigates to the homepage
+   */
+  const openHomepage = () => {
+    navigate('/');
+    props.toggle();
+  }
+
   return (
     <section className={style.menu_wrapper + ' ' + (props.menuOpen ? style.open : '')}>
       <nav>
         <div className={style.menu_header}>
-          <h2>My Lists</h2>
+          <h2 onClick={openHomepage}>My Lists</h2>
           <i className={'material-symbols-rounded ' + style.icon} onClick={() => props.toggle()}>
             close
           </i>
@@ -31,7 +49,7 @@ function Menu(props) {
         <menu>
           {lists.map((list, key) => {
             return (
-              <li>
+              <li onClick={() => openDetailpage(list)}>
                 {list.title}
               </li>
             )

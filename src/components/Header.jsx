@@ -29,7 +29,6 @@ function Header() {
       <i className={'material-symbols-rounded ' + style.icon} onClick={toggleMenu}>
         menu
       </i>
-      <h1 className='align-center'>My Todo List</h1>
       <i className={'material-symbols-rounded ' + style.icon + (notificationsOpen ? ' ' + style.open : "")} onClick={toggleNotifications}>
         notifications
       </i>
