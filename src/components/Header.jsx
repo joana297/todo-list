@@ -5,19 +5,8 @@ import axios from 'axios';
 import Menu from './menu/Menu';
 
 function Header() {
-  const [notifications, setNotifications] = useState([]);
   const [notificationsOpen, setNotificationsOpen] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
-
-  useEffect(() => {
-    getNotifications();
-  }, []);
-
-  const getNotifications = () => {
-    axios.get('http://localhost:8080/api/notifications').then((res) => {
-      setNotifications(res.data);
-    });
-  }
 
   const toggleNotifications = () => {
     if (notificationsOpen) {
@@ -45,12 +34,9 @@ function Header() {
         notifications
       </i>
       {notificationsOpen ?
-        <NotificationContainer notifications={notifications} getNotifications={getNotifications} />
+        <NotificationContainer />
         : ""}
-      {/*menuOpen ?
-        <Menu toggle={toggleMenu} menuOpen={menuOpen}/>
-      : ""*/}
-      <Menu toggle={toggleMenu} menuOpen={menuOpen}/>
+      <Menu toggle={toggleMenu} menuOpen={menuOpen} />
     </header>
   )
 }

@@ -21,8 +21,19 @@ button {
     display: flex;
     align-items: center;
     transition: 0.2s ease;
+    height: auto;
+    aspect-ratio: 1/1;
 
     &:hover {
         background-color: rgba(0, 0, 0, 0.1);
+    }
+
+    >span.text {
+        margin: 1px 5px 0 3px;
+    }
+
+    &:has(> span.text) {
+        height: auto;
+        aspect-ratio: unset;
     }
 }

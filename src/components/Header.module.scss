@@ -6,15 +6,10 @@ header {
     align-items: center;
     gap: 1.5rem;
 
-    .icon {
+    >.icon {
         font-size: 2rem;
         font-weight: 600;
         cursor: pointer;
-
-        &:hover,
-        &.open {
-            font-variation-settings: 'FILL' 1;
-        }
 
         &:first-child {
             grid-column-start: 1;
@@ -28,6 +23,11 @@ header {
             grid-column-end: 4;
             grid-row-start: 1;
             grid-row-end: 2;
+        }
+
+        &:hover,
+        &.open {
+            font-variation-settings: 'FILL' 1;
         }
     }
 
