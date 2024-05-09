@@ -1,6 +1,6 @@
 @import '../../style.scss';
 
-section.list_wrapper {
+.list_wrapper {
     width: 20rem;
     height: fit-content;
     filter: drop-shadow(2px 2px 7px #00000080);
@@ -85,4 +85,8 @@ section.list_wrapper {
             }
         }
     }
+}
+
+.newList_wrapper {
+    background-color: green;
 }

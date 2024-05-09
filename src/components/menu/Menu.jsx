@@ -10,7 +10,7 @@ function Menu(props) {
 
   useEffect(() => {
     getAllLists();
-  }, []);
+  }, [props.menuOpen]);
 
   /**
    * gets all lists from db
