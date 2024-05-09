@@ -1,0 +1,40 @@
+header {
+    display: grid;
+    grid-template-columns: 32px 1fr 32px;
+    position: relative;
+    padding: 2rem 1.5rem;
+    align-items: center;
+    gap: 1.5rem;
+
+    .icon {
+        font-size: 2rem;
+        font-weight: 600;
+        cursor: pointer;
+
+        &:hover,
+        &.open {
+            font-variation-settings: 'FILL' 1;
+        }
+
+        &:first-child {
+            grid-column-start: 1;
+            grid-column-end: 2;
+            grid-row-start: 1;
+            grid-row-end: 2;
+        }
+
+        &:last-child {
+            grid-column-start: 3;
+            grid-column-end: 4;
+            grid-row-start: 1;
+            grid-row-end: 2;
+        }
+    }
+
+    h1 {
+        grid-column-start: 1;
+        grid-column-end: 4;
+        grid-row-start: 2;
+        grid-row-end: 3;
+    }
+}

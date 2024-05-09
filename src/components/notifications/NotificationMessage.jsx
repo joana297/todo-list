@@ -18,6 +18,11 @@ export default function NotificationMessage(props) {
 
     return (
         <div className={style.todo_wrapper}>
+            <button type='button' onClick={() => props.deleteAll()}>
+                <span className="material-symbols-rounded">
+                    delete
+                </span>
+            </button>
             <p>{props.notification.date_time}</p>
             <h4>To Do: {todo.text}</h4>
             <p>in Liste: {list.title}</p>
