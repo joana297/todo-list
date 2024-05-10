@@ -1,7 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import style from './Notification.module.scss';
-import axios from 'axios';
-import url from '../../BackendURL';
 
 function Notification(props) {
   const [notification, setNotification] = useState({});

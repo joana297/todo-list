@@ -38,7 +38,7 @@ function Detailpage() {
     <>
       <h1>{list.title}</h1>
       <section className='detailpage_wrapper'>
-        <List list={list} delete={deleteList} />
+        <List list={list} delete={deleteList} update={getList} />
       </section>
     </>
   )
