@@ -50,7 +50,7 @@ function Menu(props) {
         <menu>
           {lists.map((list, key) => {
             return (
-              <li onClick={() => openDetailpage(list)}>
+              <li onClick={() => openDetailpage(list)} key={key}>
                 {list.title}
               </li>
             )

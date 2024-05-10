@@ -7,6 +7,7 @@ import ListItem from './ListItem';
 function List(props) {
     const [list, setList] = useState({});
     const [listTitle, setListTitle] = useState("");
+    const [listItems, setListItems] = useState([]);
 
     useEffect(() => {
         if (!props.new) {
@@ -15,6 +16,9 @@ function List(props) {
         }
     }, [props.list]);
 
+    useEffect(() => {
+        getListItems();
+    }, [list]);
 
     /**
      * creates a new list
@@ -41,6 +45,40 @@ function List(props) {
             { headers: { 'Content-Type': 'application/json' } }).then(res => {
                 console.log(res);
                 props.update();
+            });
+    }
+
+    /**
+     * gets all todo items for the list from db
+     */
+    const getListItems = () => {
+        axios.get(url + '/api/lists/' + list.id + '/todos').then(res => {
+            setListItems(res.data);
+        })
+    }
+
+    /**
+   * deletes a todo item from the list by its id
+   */
+    const deleteListItem = async (todo) => {
+        await axios.delete(url + '/api/lists/' + todo.list_id + '/todos/' + todo.id)
+            .then((res) => {
+                console.log(res.data);
+                getListItems();
+            });
+    }
+
+    /**
+     * creates a new todo item
+     */
+    const createNewListItem = async () => {
+        await axios.post(url + '/api/lists/' + list.id + '/todos',
+            {
+                text: 'New Todo'
+            },
+            { headers: { 'Content-Type': 'application/json' } }).then(res => {
+                console.log(res);
+                getListItems();
             });
     }
 
@@ -73,13 +111,13 @@ function List(props) {
                 </section>
 
                 <section className={style.list_item_wrapper}>
-                    {/*listItems.map((item, key) => {
-                        return <ListItem key={key} todo={item} /*deleteFct={deleteListItem} />
-                    })*/}
+                    {listItems.map((item, key) => {
+                        return <ListItem todo={item} key={key} delete={deleteListItem} update={getListItems} />
+                    })}
                 </section>
 
                 <section className={style.list_bottom_wrapper}>
-                    <i /*onClick={addListItem}*/ className="material-symbols-rounded">
+                    <i onClick={createNewListItem} className="material-symbols-rounded">
                         add
                     </i>
                 </section>

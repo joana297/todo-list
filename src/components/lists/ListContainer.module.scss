@@ -1,1 +1,19 @@
 @import '../../style.scss';
+
+section.list_container {
+    display: flex;
+    width: 100vw;
+    height: calc(100vh - 10rem);
+    margin: 2rem -2rem 0;
+    overflow: hidden;
+    overflow-x: scroll;
+
+    .overflow_container {
+        display: flex;
+        flex-flow: row nowrap;
+        gap: 1rem;
+        overflow: scroll;
+        overflow-x: scroll;
+        padding: 0 2rem;
+    }
+}

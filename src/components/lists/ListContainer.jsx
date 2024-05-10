@@ -33,13 +33,15 @@ function ListContainer() {
   }
 
   return (
-    <section>
-      {lists.map((list, key) => {
-        return (
-          <List list={list} key={key} delete={deleteList} update={getLists} />
-        )
-      })}
-      <List new update={getLists}/>
+    <section className={style.list_container}>
+      <div className={style.overflow_container}>
+        {lists.map((list, key) => {
+          return (
+            <List list={list} key={key} delete={deleteList} update={getLists} />
+          )
+        })}
+        <List new update={getLists} />
+      </div>
     </section>
   )
 }
