@@ -1,22 +1,20 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import style from './Notification.module.scss';
 import axios from 'axios';
 import url from '../../BackendURL';
 
 function Notification(props) {
-  const updateNotification = async (e) => {
-    await axios.patch(url + '/api/lists/' + props.todo.list_id + '/todos/' + props.todo.id,
-      {
-        text: e.target.value
-      },
-      { headers: { 'Content-Type': 'application/json' } }).then((res) => {
-        console.log(res.data);
-      });
-  }
+  const [notification, setNotification] = useState({});
+  const [datetime, setDatetime] = useState("");
 
+  useEffect(() => {
+    setNotification(props.notification);
+    setDatetime(props.notification.datetime);
+  }, [props.notification]);
+  
   return (
     <section className={style.notification_wrapper}>
-      <button type='button' onClick={() => props.deleteFct(props.notification.id)}>
+      <button type='button' onClick={() => props.delete(notification)}>
             <span className="material-symbols-rounded">
               close
             </span>

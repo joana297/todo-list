@@ -19,8 +19,8 @@ function ListItem(props) {
   }, [todo]);
 
   /**
-     * updates the text of the todo
-     */
+    * updates the text of the todo
+    */
   const updateTodoText = async () => {
     await axios.patch(url + '/api/lists/' + todo.list_id + '/todos/' + todo.id,
       {
@@ -58,7 +58,7 @@ function ListItem(props) {
   const createNewNotification = async () => {
     await axios.post(url + '/api/lists/' + todo.list_id + '/todos/' + todo.id + '/notifications',
       {
-        text: 'New Todo'
+        date_time: 'New Todo'
       },
       { headers: { 'Content-Type': 'application/json' } }).then(res => {
         console.log(res);

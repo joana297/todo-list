@@ -1,30 +1,44 @@
 import React, { useEffect, useState } from 'react'
 import url from '../BackendURL';
-import { useParams } from 'react-router';
+import { useNavigate, useParams } from 'react-router';
 import axios from 'axios';
+import List from '../components/lists/List';
 
 function Detailpage() {
-  const [list, setList] = useState([]);
+  const navigate = useNavigate();
   const { id } = useParams();
+  const [list, setList] = useState([]);
 
   useEffect(() => {
-    console.log("ID ", id );
     getList();
   }, [id]);
 
+  /**
+   * gets the list thats specified by the id in the url
+   */
   const getList = () => {
     axios.get(url + '/api/lists/' + id)
       .then(res => {
-        console.log("HIER", res.data);
         setList(res.data[0]);
+      });
+  }
+
+  /**
+   * deletes a list by its id
+   */
+  const deleteList = async () => {
+    await axios.delete(url + '/api/lists/' + list.id)
+      .then((res) => {
+        console.log(res.data);
+        navigate('/');
       });
   }
 
   return (
     <>
       <h1>{list.title}</h1>
-      <section>
-
+      <section className='detailpage_wrapper'>
+        <List list={list} delete={deleteList} />
       </section>
     </>
   )
