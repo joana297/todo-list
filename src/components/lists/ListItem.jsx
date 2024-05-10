@@ -5,49 +5,65 @@ import axios from 'axios';
 import url from '../../BackendURL';
 
 function ListItem(props) {
+  const [todo, setTodo] = useState({});
   const [todoText, setTodoText] = useState("");
   const [notifications, setNotifications] = useState([]);
 
   useEffect(() => {
-    getNotifications();
+    setTodo(props.todo);
   }, [props.todo]);
 
   useEffect(() => {
-    setTodoText(props.todo.text);
-  }, [props.todo]);
+    setTodoText(todo.text);
+    getNotifications();
+  }, [todo]);
 
-  const updateTodoText = async (e) => {
-    await axios.patch(url + '/api/lists/' + props.todo.list_id + '/todos/' + props.todo.id,
+  /**
+     * updates the text of the todo
+     */
+  const updateTodoText = async () => {
+    await axios.patch(url + '/api/lists/' + todo.list_id + '/todos/' + todo.id,
       {
-        text: e.target.value
+        text: todoText
       },
-      { headers: { 'Content-Type': 'application/json' } }).then((res) => {
-        console.log(res.data);
+      { headers: { 'Content-Type': 'application/json' } }).then(res => {
+        console.log(res);
+        props.update();
       });
   }
 
+  /**
+     * gets all notifications for the todo item from db
+     */
   const getNotifications = () => {
-    axios.get(url + '/api/lists/' + props.todo.list_id + '/todos/' + props.todo.id + '/notifications').then((res) => {
+    axios.get(url + '/api/lists/' + todo.list_id + '/todos/' + todo.id + '/notifications').then(res => {
       setNotifications(res.data);
-    });
+    })
   }
 
-  const addNotification = async() => {
-    await axios.post(url + '/api/lists/' + props.todo.list_id + '/todos/' + props.todo.id + '/notifications',
-      {
-        date_time: "My new notification"
-      },
-      { headers: { 'Content-Type': 'application/json' } }).then(res => {
+  /**
+  * deletes a notification from the todo item by its id
+  */
+  const deleteNotification = async (notification) => {
+    await axios.delete(url + '/api/lists/' + notification.list_id + '/todos/' + notification.todo_id)
+      .then((res) => {
+        console.log(res.data);
         getNotifications();
       });
   }
 
-  const deleteNotification = async (id) => {
-    await axios.delete(url + '/api/lists/' + props.todo.list_id + '/todos/' + props.todo.id + '/notifications/' + id).then((res) => {
-      console.log(res.data);
-    }).then(res => {
-      getNotifications();
-    });
+  /**
+   * creates a new notification for the todo item
+   */
+  const createNewNotification = async () => {
+    await axios.post(url + '/api/lists/' + todo.list_id + '/todos/' + todo.id + '/notifications',
+      {
+        text: 'New Todo'
+      },
+      { headers: { 'Content-Type': 'application/json' } }).then(res => {
+        console.log(res);
+        getNotifications();
+      });
   }
 
   return (
@@ -56,20 +72,20 @@ function ListItem(props) {
         <input type='checkbox' />
 
         <div className={style.title}>
-          <input type='text' 
-          value={todoText}
-          onChange={(e) => setTodoText(e.target.value)}
-          onBlur={updateTodoText}/>
+          <input type='text'
+            value={todoText}
+            onChange={(e) => setTodoText(e.target.value)}
+            onBlur={updateTodoText} />
           <span className={style.line} />
         </div>
 
         <section className={style.btn_group}>
-          <button type='button' className={style.alarm} onClick={addNotification}>
+          <button type='button' className={style.alarm} onClick={createNewNotification}>
             <span className="material-symbols-rounded">
               alarm
             </span>
           </button>
-          <button type='button' onClick={() => props.deleteFct(props.todo.id)}>
+          <button type='button' onClick={() => props.delete(todo)}>
             <span className="material-symbols-rounded">
               delete
             </span>
@@ -77,7 +93,7 @@ function ListItem(props) {
         </section>
       </section>
       {notifications.map((item, key) => {
-        return <Notification key={key} notification={item} deleteFct={deleteNotification} />
+        return <Notification notification={item} key={key} delete={deleteNotification} />
       })}
     </section>
 

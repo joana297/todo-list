@@ -103,7 +103,7 @@ function List(props) {
                         onChange={(e) => setListTitle(e.target.value)}
                         onBlur={updateListTitle} />
 
-                    <button type='button' onClick={() => props.deleteFct(props.list.id)}>
+                    <button type='button' onClick={() => props.delete(list)}>
                         <span className="material-symbols-rounded">
                             delete
                         </span>
