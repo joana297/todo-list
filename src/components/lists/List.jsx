@@ -38,7 +38,7 @@ function List(props) {
      * updates the title of the list
      */
     const updateListTitle = async () => {
-        await axios.patch(url + '/api/lists/' + list.id,
+        await axios.put(url + '/api/lists/' + list.id,
             {
                 title: listTitle
             },

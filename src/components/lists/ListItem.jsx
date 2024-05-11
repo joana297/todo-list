@@ -7,6 +7,7 @@ import url from '../../BackendURL';
 function ListItem(props) {
   const [todo, setTodo] = useState({});
   const [todoText, setTodoText] = useState("");
+  const [isDone, setIsDone] = useState(false);
   const [notifications, setNotifications] = useState([]);
 
   useEffect(() => {
@@ -15,21 +16,36 @@ function ListItem(props) {
 
   useEffect(() => {
     setTodoText(todo.text);
+    setIsDone(todo.is_done);
     getNotifications();
   }, [todo]);
 
   /**
-    * updates the text of the todo
+    * updates the text & status of the todo
     */
-  const updateTodoText = async () => {
-    await axios.patch(url + '/api/lists/' + todo.list_id + '/todos/' + todo.id,
+  const updateTodo = async (done) => {
+    await axios.put(url + '/api/lists/' + todo.list_id + '/todos/' + todo.id,
       {
-        text: todoText
+        text: todoText,
+        is_done: (done != null) ? done : isDone
       },
       { headers: { 'Content-Type': 'application/json' } }).then(res => {
         console.log(res);
         props.update();
       });
+  }
+
+  /**
+   * toggles if the todo is done or undone
+   */
+  const toggleDone = () => {
+    if (isDone) {
+      setIsDone(false);
+      updateTodo(false);
+    } else {
+      setIsDone(true);
+      updateTodo(true);
+    }
   }
 
   /**
@@ -69,13 +85,13 @@ function ListItem(props) {
   return (
     <section className={style.list_item_wrapper}>
       <section className={style.list_item}>
-        <input type='checkbox' checked={todo.is_done} />
+        <input type='checkbox' checked={todo.is_done} onChange={toggleDone} />
 
         <div className={style.title}>
           <input type='text'
             value={todoText}
             onChange={(e) => setTodoText(e.target.value)}
-            onBlur={updateTodoText} />
+            onBlur={updateTodo} />
           <span className={style.line} />
         </div>
 
