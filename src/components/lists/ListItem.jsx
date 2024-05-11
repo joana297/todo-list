@@ -69,7 +69,7 @@ function ListItem(props) {
   return (
     <section className={style.list_item_wrapper}>
       <section className={style.list_item}>
-        <input type='checkbox' />
+        <input type='checkbox' checked={todo.is_done} />
 
         <div className={style.title}>
           <input type='text'
