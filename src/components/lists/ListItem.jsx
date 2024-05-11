@@ -91,7 +91,7 @@ function ListItem(props) {
           <input type='text'
             value={todoText}
             onChange={(e) => setTodoText(e.target.value)}
-            onBlur={updateTodo} />
+            onBlur={() => {updateTodo(isDone)}} />
           <span className={style.line} />
         </div>
 

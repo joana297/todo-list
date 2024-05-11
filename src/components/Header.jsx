@@ -20,6 +20,7 @@ function Header() {
     if (menuOpen) {
       setMenuOpen(false);
     } else {
+      setNotificationsOpen(false);
       setMenuOpen(true);
     }
   }

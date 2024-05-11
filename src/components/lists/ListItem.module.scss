@@ -8,6 +8,7 @@ section.list_item_wrapper {
     background-size: cover;
     padding: 0.5rem;
     margin-top: -1px;
+    margin-bottom: -2px;
     transition: 0.2s ease;
 
     &:hover {
@@ -18,8 +19,8 @@ section.list_item_wrapper {
     .list_item {
         display: flex;
         justify-content: space-between;
-        border-bottom: 1px solid black;
-        padding: 0.5rem 0;
+        border-top: 1px solid black;
+        padding: 1rem 0 0;
         column-gap: 0.5rem;
         align-items: center;
 
@@ -60,7 +61,7 @@ section.list_item_wrapper {
         }
     }
 
-    &:last-child {
+    &:first-child {
         .list_item {
             border: none;
         }
