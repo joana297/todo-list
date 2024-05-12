@@ -6,7 +6,7 @@ import ListItem from './ListItem';
 
 function List(props) {
     const [list, setList] = useState({});
-    const [listTitle, setListTitle] = useState("");
+    const [listTitle, setListTitle] = useState('Meine neue Liste');
     const [listItems, setListItems] = useState([]);
 
     useEffect(() => {
@@ -85,15 +85,18 @@ function List(props) {
     return (
         props.new ?
             <div className={style.newList_wrapper}>
-                <input
-                    type='text'
-                    value={listTitle}
-                    onChange={(e) => setListTitle(e.target.value)} />
-                <button type='button' onClick={createNewList}>
-                    <span className="material-symbols-rounded">
+                <section className={style.list_title_wrapper}>
+                    <input className={style.list_title}
+                        type='text'
+                        value={listTitle}
+                        onChange={(e) => setListTitle(e.target.value)} />
+                </section>
+
+                <section className={style.list_bottom_wrapper}>
+                    <i onClick={createNewList} className="material-symbols-rounded">
                         add
-                    </span>
-                </button>
+                    </i>
+                </section>
             </div> :
             <div className={style.list_wrapper}>
                 <section className={style.list_title_wrapper}>

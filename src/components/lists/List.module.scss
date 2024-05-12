@@ -1,6 +1,6 @@
 @import '../../style.scss';
 
-.list_wrapper {
+.list_wrapper, .newList_wrapper {
     max-width: 23rem;
     height: fit-content;
     padding-bottom: 2rem;
@@ -89,5 +89,9 @@
 }
 
 .newList_wrapper {
-    background-color: green;
+    opacity: 0.5;
+
+    .list_title_wrapper {
+        width: calc(100vw - 4rem);
+    }
 }
