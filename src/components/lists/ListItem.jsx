@@ -3,6 +3,7 @@ import style from './ListItem.module.scss';
 import Notification from './Notification';
 import axios from 'axios';
 import url from '../../BackendURL';
+import { format } from 'date-fns';
 
 function ListItem(props) {
   const [todo, setTodo] = useState({});
@@ -61,7 +62,7 @@ function ListItem(props) {
   * deletes a notification from the todo item by its id
   */
   const deleteNotification = async (notification) => {
-    await axios.delete(url + '/api/lists/' + notification.list_id + '/todos/' + notification.todo_id)
+    await axios.delete(url + '/api/lists/' + notification.list_id + '/todos/' + notification.todo_id + '/notifications/' + notification.id)
       .then((res) => {
         console.log(res.data);
         getNotifications();
@@ -74,7 +75,7 @@ function ListItem(props) {
   const createNewNotification = async () => {
     await axios.post(url + '/api/lists/' + todo.list_id + '/todos/' + todo.id + '/notifications',
       {
-        date_time: 'New Todo'
+        date_time: format(new Date(), "yyyy-MM-dd'T'HH:mm")
       },
       { headers: { 'Content-Type': 'application/json' } }).then(res => {
         console.log(res);
@@ -109,7 +110,7 @@ function ListItem(props) {
         </section>
       </section>
       {notifications.map((item, key) => {
-        return <Notification notification={item} key={key} delete={deleteNotification} />
+        return <Notification notification={item} key={key} delete={deleteNotification} update={getNotifications} />
       })}
     </section>
 
