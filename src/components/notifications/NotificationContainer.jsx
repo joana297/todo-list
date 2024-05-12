@@ -5,22 +5,14 @@ import NotificationMessage from './NotificationMessage';
 import style from './NotificationContainer.module.scss';
 import url from '../../BackendURL';
 
-function NotificationContainer() {
+function NotificationContainer(props) {
 
   const [notifications, setNotifications] = useState([]);
 
   useEffect(() => {
-    getNotifications();
-  }, []);
+    setNotifications(props.notifications);
+  }, [props.notifications]);
 
-  /**
-   * gets all expired notifications from db
-   */
-  const getNotifications = () => {
-    axios.get(url + '/api/notifications').then((res) => {
-      setNotifications(res.data);
-    });
-  }
 
   /**
    * iterates through all expired notifications & deletes them
@@ -43,7 +35,7 @@ function NotificationContainer() {
           await axios.delete(url + '/api/lists/' + notification.list_id + '/todos/' + notification.todo_id + '/notifications/' + notification.id)
             .then((res) => {
               console.log(res.data);
-              getNotifications();
+              props.update();
             });
         });
       }
@@ -57,13 +49,13 @@ function NotificationContainer() {
     await axios.delete(url + '/api/lists/' + notification.list_id + '/todos/' + notification.todo_id + '/notifications/' + notification.id)
       .then((res) => {
         console.log(res.data);
-        getNotifications();
+        props.update();
       });
   }
 
   return (
     <section className={style.notification_container}>
-      {notifications.length == 0 ?
+      {notifications.length === 0 ?
         <p>Sie haben keine aktuellen Benachrichtigungen</p>
         : <>
           <button type='button' onClick={deleteAllNotifications}>

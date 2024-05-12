@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import style from './Menu.module.scss';
-import { Link, NavLink, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import url from '../../BackendURL';
 

@@ -1,7 +1,7 @@
 @import '../../style.scss';
 
 .list_wrapper {
-    max-width: 20rem;
+    max-width: 23rem;
     height: fit-content;
     padding-bottom: 2rem;
     filter: drop-shadow(2px 2px 7px #00000080);
@@ -42,7 +42,7 @@
     }
 
     .list_item_wrapper {
-        width: 20rem;
+        width: calc(100vw - 4rem);
         max-height: calc(100vh - 23rem);
         overflow-y: scroll;
     }
