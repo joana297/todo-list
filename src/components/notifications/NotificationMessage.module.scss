@@ -9,7 +9,14 @@
     box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.5);
     align-items: center;
 
-    h4 {
-        font-family: $font-family-default;
+    .infotext {
+        .date {
+            color: $red;
+        }
+
+        h4 {
+            font-family: $font-family-default;
+            margin: 0.5rem 0 0;
+        }
     }
 }
