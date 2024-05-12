@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import axios from 'axios';
 import Swal from 'sweetalert2';
 import NotificationMessage from './NotificationMessage';
@@ -6,13 +6,11 @@ import style from './NotificationContainer.module.scss';
 import url from '../../BackendURL';
 
 function NotificationContainer(props) {
-
   const [notifications, setNotifications] = useState([]);
 
   useEffect(() => {
     setNotifications(props.notifications);
   }, [props.notifications]);
-
 
   /**
    * iterates through all expired notifications & deletes them

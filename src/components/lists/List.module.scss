@@ -43,6 +43,7 @@
 
     .list_item_wrapper {
         width: calc(100vw - 4rem);
+        max-width: 23rem;
         max-height: calc(100vh - 23rem);
         overflow-y: scroll;
     }
@@ -93,5 +94,6 @@
 
     .list_title_wrapper {
         width: calc(100vw - 4rem);
+        max-width: 23rem;
     }
 }

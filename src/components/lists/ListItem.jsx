@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, createContext, useContext } from 'react';
 import style from './ListItem.module.scss';
 import Notification from './Notification';
 import axios from 'axios';
@@ -92,7 +92,7 @@ function ListItem(props) {
           <input type='text'
             value={todoText}
             onChange={(e) => setTodoText(e.target.value)}
-            onBlur={() => {updateTodo(isDone)}} />
+            onBlur={() => { updateTodo(isDone) }} />
           <span className={style.line} />
         </div>
 
@@ -113,7 +113,6 @@ function ListItem(props) {
         return <Notification notification={item} key={key} delete={deleteNotification} update={getNotifications} />
       })}
     </section>
-
   )
 }
 
