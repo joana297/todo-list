@@ -1,4 +1,4 @@
-@import '../../style.scss';
+@use '../../styles/variables';
 
 .notification_wrapper {
     display: grid;
@@ -11,11 +11,11 @@
 
     .infotext {
         .date {
-            color: $red;
+            color: variables.$red;
         }
 
         h4 {
-            font-family: $font-family-default;
+            font-family: variables.$font-family-default;
             margin: 0.5rem 0 0;
         }
     }

@@ -1,4 +1,4 @@
-@import '../../style.scss';
+@use '../../styles/variables';
 
 .menu_wrapper {
     position: absolute;
@@ -6,7 +6,7 @@
     height: 100vh;
     top: 0;
     left: 0;
-    //background-color: rgba($color: $black, $alpha: 1.0);
+    //background-color: rgba($color: variables.$black, $alpha: 1.0);
     z-index: 30;
     transform: translateX(-100%);
     transition: 0.8s ease;
@@ -22,7 +22,7 @@
         height: 100%;
         background-color: rgba(0, 0, 0, 0.85);
         backdrop-filter: blur(4px);
-        color: $white;
+        color: variables.$white;
         padding: 2rem;
 
         .menu_header {

@@ -1,4 +1,4 @@
-@import '../../style.scss';
+@use '../../styles/variables';
 
 section.list_item_wrapper {
     width: 100%;
@@ -25,7 +25,7 @@ section.list_item_wrapper {
         align-items: center;
 
         input[type="text"] {
-            font-size: $font-size-h5;
+            font-size: variables.$font-size-h5;
             position: relative;
         }
 

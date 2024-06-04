@@ -1,6 +1,6 @@
-@import 'styles/variables';
-@import 'styles/forms';
-@import 'styles/fonts';
+@use 'styles/variables';
+@use 'styles/forms';
+@use 'styles/fonts';
 
 * {
     box-sizing: border-box;

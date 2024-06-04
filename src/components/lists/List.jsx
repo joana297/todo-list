@@ -90,6 +90,7 @@ function List(props) {
                         type='text'
                         value={listTitle}
                         onChange={(e) => setListTitle(e.target.value)} />
+                    
                 </section>
 
                 <section className={style.list_bottom_wrapper}>

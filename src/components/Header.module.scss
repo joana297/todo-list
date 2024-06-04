@@ -1,4 +1,4 @@
-@import '../style.scss';
+@use '../styles/variables';
 
 header {
     display: flex;
@@ -33,7 +33,7 @@ header {
                 top: 0.25rem;
                 right: 0.25rem;
                 border-radius: 50%;
-                background-color: $red;
+                background-color: variables.$red;
             }
         }
     }

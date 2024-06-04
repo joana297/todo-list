@@ -1,25 +1,27 @@
+@use './variables';
+
 h1,
 h2,
 h3, 
 h4 {
-    font-family: $font-family-headlines;
+    font-family: variables.$font-family-headlines;
     margin: 0;
 }
 
 h1 {
-    font-size: $font-size-h1;
+    font-size: variables.$font-size-h1;
     text-align: center;
 }
 
 h2 {
-    font-size: $font-size-h2;
+    font-size: variables.$font-size-h2;
 }
 
 h3 {
-    font-size: $font-size-h3;
+    font-size: variables.$font-size-h3;
 }
 
 p {
-    font-family: $font-family-default;
+    font-family: variables.$font-family-default;
     margin: 0;
 }

@@ -1,10 +1,12 @@
+@use './variables';
+
 input:not([type="button"], [type="checkbox"]) {
     width: 100%;
     border-radius: 7px;
     border: none;
     background-color: transparent;
-    font-family: $font-family-default;
-    font-size: $font-size-default;
+    font-family: variables.$font-family-default;
+    font-size: variables.$font-size-default;
     padding: 6px 0.5rem 4px;
 
     &:focus-visible {
