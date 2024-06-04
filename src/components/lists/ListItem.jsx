@@ -1,4 +1,4 @@
-import React, { useState, useEffect, createContext, useContext } from 'react';
+import React, { useState, useEffect } from 'react';
 import style from './ListItem.module.scss';
 import Notification from './Notification';
 import axios from 'axios';
@@ -28,7 +28,7 @@ function ListItem(props) {
     await axios.put(url + '/api/lists/' + todo.list_id + '/todos/' + todo.id,
       {
         text: todoText,
-        is_done: (done != null) ? done : isDone
+        is_done: done
       },
       { headers: { 'Content-Type': 'application/json' } }).then(res => {
         console.log(res);
@@ -39,14 +39,9 @@ function ListItem(props) {
   /**
    * toggles if the todo is done or undone
    */
-  const toggleDone = () => {
-    if (isDone) {
-      setIsDone(false);
-      updateTodo(false);
-    } else {
-      setIsDone(true);
-      updateTodo(true);
-    }
+  const toggleDone = (e) => {
+    setIsDone(e.target.checked);
+    updateTodo(e.target.checked);
   }
 
   /**
@@ -86,11 +81,13 @@ function ListItem(props) {
   return (
     <section className={style.list_item_wrapper}>
       <section className={style.list_item}>
-        <input type='checkbox' checked={todo.is_done} onChange={toggleDone} />
+        <input type='checkbox'
+          checked={isDone ?? false}
+          onChange={toggleDone} />
 
         <div className={style.title}>
           <input type='text'
-            value={todoText}
+            value={todoText ?? ""}
             onChange={(e) => setTodoText(e.target.value)}
             onBlur={() => { updateTodo(isDone) }} />
           <span className={style.line} />

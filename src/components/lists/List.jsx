@@ -3,10 +3,11 @@ import axios from 'axios';
 import url from '../../BackendURL';
 import style from './List.module.scss';
 import ListItem from './ListItem';
+import Swal from 'sweetalert2';
 
 function List(props) {
     const [list, setList] = useState({});
-    const [listTitle, setListTitle] = useState('Meine neue Liste');
+    const [listTitle, setListTitle] = useState("Meine neue Liste");
     const [listItems, setListItems] = useState([]);
 
     useEffect(() => {
@@ -82,15 +83,31 @@ function List(props) {
             });
     }
 
+    const validateTitle = (e) => {
+        if (e.target.value == null || e.target.value == "") {
+            Swal.fire({
+                position: 'center',
+                icon: 'warning',
+                iconColor: '#ff6a6a',
+                title: 'Titel der Liste darf nicht leer sein!',
+                showConfirmButton: true,
+                confirmButtonText: 'Ok',
+                confirmButtonColor: '#bef983',
+            });
+        } else {
+            updateListTitle();
+        }
+        //setListTitle(e.target.value ?? "Todo List")
+    }
+
     return (
         props.new ?
             <div className={style.newList_wrapper}>
                 <section className={style.list_title_wrapper}>
                     <input className={style.list_title}
                         type='text'
-                        value={listTitle}
+                        value={listTitle ?? "Todo List"}
                         onChange={(e) => setListTitle(e.target.value)} />
-                    
                 </section>
 
                 <section className={style.list_bottom_wrapper}>
@@ -103,9 +120,9 @@ function List(props) {
                 <section className={style.list_title_wrapper}>
                     <input className={style.list_title}
                         type='text'
-                        value={listTitle}
+                        value={listTitle ?? "Todo List"}
                         onChange={(e) => setListTitle(e.target.value)}
-                        onBlur={updateListTitle} />
+                        onBlur={validateTitle} />
 
                     <button type='button' onClick={() => props.delete(list)}>
                         <span className="material-symbols-rounded">
