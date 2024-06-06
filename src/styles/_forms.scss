@@ -38,4 +38,13 @@ button {
         height: auto;
         aspect-ratio: unset;
     }
+
+    &.btn-default {
+        width: auto;
+        height: auto;
+        background-color: #fff;
+        aspect-ratio: unset;
+        padding: 0.5rem 0.75rem;
+        font-size: 16px;
+    }
 }

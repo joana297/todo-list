@@ -3,6 +3,7 @@ import Layout from "./components/Layout";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Homepage from "./screens/Homepage";
 import Detailpage from "./screens/Detailpage";
+import Errorpage from "./screens/Errorpage";
 
 export default function App() {
   return (
@@ -14,6 +15,7 @@ export default function App() {
               <Route index element={<Homepage />} />
               <Route path="list/:id" element={<Detailpage />} />
             </Route>
+            <Route path='/404' element={<Errorpage />} />
           </Routes>
         </Layout>
       </BrowserRouter>
