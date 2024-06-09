@@ -1,23 +1,29 @@
-import React from "react";
+import React, { useState } from "react";
 import Layout from "./components/Layout";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Homepage from "./screens/Homepage";
 import Detailpage from "./screens/Detailpage";
 import Errorpage from "./screens/Errorpage";
+import { NotificationContext } from "./components/lists/ListItem";
 
 export default function App() {
+
+  const [updateNotifications, setUpdateNotifications] = useState(false);
+
   return (
     <>
       <BrowserRouter>
-        <Layout>
-          <Routes>
-            <Route path="/">
-              <Route index element={<Homepage />} />
-              <Route path="list/:id" element={<Detailpage />} />
-            </Route>
-            <Route path='/404' element={<Errorpage />} />
-          </Routes>
-        </Layout>
+        <NotificationContext.Provider value={{ updateNotifications, setUpdateNotifications }}>
+          <Layout>
+            <Routes>
+              <Route path="/">
+                <Route index element={<Homepage />} />
+                <Route path="list/:id" element={<Detailpage />} />
+              </Route>
+              <Route path='/404' element={<Errorpage />} />
+            </Routes>
+          </Layout>
+        </NotificationContext.Provider>
       </BrowserRouter>
     </>
   );

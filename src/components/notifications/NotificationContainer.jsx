@@ -4,8 +4,10 @@ import Swal from 'sweetalert2';
 import NotificationMessage from './NotificationMessage';
 import style from './NotificationContainer.module.scss';
 import url from '../../BackendURL';
+import { NotificationContext } from '../lists/ListItem';
 
 function NotificationContainer(props) {
+  const { setUpdateNotifications } = useContext(NotificationContext);
   const [notifications, setNotifications] = useState([]);
 
   useEffect(() => {
@@ -33,6 +35,7 @@ function NotificationContainer(props) {
           await axios.delete(url + '/api/lists/' + notification.list_id + '/todos/' + notification.todo_id + '/notifications/' + notification.id)
             .then((res) => {
               console.log(res.data);
+              setUpdateNotifications(true);
               props.update();
             });
         });
@@ -47,6 +50,7 @@ function NotificationContainer(props) {
     await axios.delete(url + '/api/lists/' + notification.list_id + '/todos/' + notification.todo_id + '/notifications/' + notification.id)
       .then((res) => {
         console.log(res.data);
+        setUpdateNotifications(true);
         props.update();
       });
   }

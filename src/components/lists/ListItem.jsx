@@ -1,11 +1,15 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, createContext, useContext } from 'react';
 import style from './ListItem.module.scss';
 import Notification from './Notification';
 import axios from 'axios';
 import url from '../../BackendURL';
 import { format } from 'date-fns';
 
+export const NotificationContext = createContext(false);
+
 function ListItem(props) {
+  const { updateNotifications, setUpdateNotifications } = useContext(NotificationContext);
+
   const [todo, setTodo] = useState({});
   const [todoText, setTodoText] = useState("");
   const [isDone, setIsDone] = useState(false);
@@ -20,6 +24,13 @@ function ListItem(props) {
     setIsDone(todo.is_done);
     getNotifications();
   }, [todo]);
+
+  useEffect(() => {
+    if (updateNotifications) {
+      getNotifications();
+      setUpdateNotifications(false);
+    }
+  }, [updateNotifications]);
 
   /**
     * updates the text & status of the todo
@@ -75,11 +86,12 @@ function ListItem(props) {
       { headers: { 'Content-Type': 'application/json' } }).then(res => {
         console.log(res);
         getNotifications();
+        setUpdateNotifications(true);
       });
   }
 
   return (
-    <section className={style.list_item_wrapper}>
+    <article className={style.list_item_wrapper}>
       <section className={style.list_item}>
         <input type='checkbox'
           checked={isDone ?? false}
@@ -107,9 +119,9 @@ function ListItem(props) {
         </section>
       </section>
       {notifications.map((item, key) => {
-        return <Notification notification={item} key={key} delete={deleteNotification} update={getNotifications} />
+        return <Notification notification={item} key={key} delete={deleteNotification} update={() => {getNotifications(); setUpdateNotifications(true);}} />
       })}
-    </section>
+    </article>
   )
 }
 
