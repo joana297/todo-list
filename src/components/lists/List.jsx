@@ -93,11 +93,13 @@ function List(props) {
                 showConfirmButton: true,
                 confirmButtonText: 'Ok',
                 confirmButtonColor: '#bef983',
+            }).then(() => {
+                setListTitle("My List");
+                updateListTitle();
             });
         } else {
             updateListTitle();
         }
-        //setListTitle(e.target.value ?? "Todo List")
     }
 
     return (
@@ -107,7 +109,8 @@ function List(props) {
                     <input className={style.list_title}
                         type='text'
                         value={listTitle ?? "Todo List"}
-                        onChange={(e) => setListTitle(e.target.value)} />
+                        onChange={(e) => setListTitle(e.target.value)}
+                        required />
                 </section>
 
                 <section className={style.list_bottom_wrapper}>
@@ -122,7 +125,8 @@ function List(props) {
                         type='text'
                         value={listTitle ?? "Todo List"}
                         onChange={(e) => setListTitle(e.target.value)}
-                        onBlur={validateTitle} />
+                        onBlur={validateTitle}
+                        required />
 
                     <button type='button' onClick={() => props.delete(list)}>
                         <span className="material-symbols-rounded">

@@ -20,7 +20,7 @@ function Detailpage() {
   const getList = () => {
     axios.get(url + '/api/lists/' + id)
       .then(res => {
-        (res.data.length > 0) ? setList(res.data[0]) : navigate('/404')
+        (res.data.list.length > 0) ? setList(res.data.list[0]) : navigate('/404')
       });
   }
 

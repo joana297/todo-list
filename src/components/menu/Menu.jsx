@@ -17,7 +17,7 @@ function Menu(props) {
    */
   const getAllLists = () => {
     axios.get(url + '/api/lists').then((res) => {
-      setLists(res.data);
+      setLists(res.data.lists);
     });
   }
 
@@ -26,7 +26,7 @@ function Menu(props) {
    * @param {*} list 
    */
   const openDetailpage = (list) => {
-    navigate('list/' + list.id);
+    navigate('lists/' + list.id);
     props.toggle();
   }
 

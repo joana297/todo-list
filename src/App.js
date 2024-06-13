@@ -11,20 +11,23 @@ export default function App() {
   const [updateNotifications, setUpdateNotifications] = useState(false);
 
   return (
-    <>
-      <BrowserRouter>
-        <NotificationContext.Provider value={{ updateNotifications, setUpdateNotifications }}>
-          <Layout>
-            <Routes>
-              <Route path="/">
-                <Route index element={<Homepage />} />
-                <Route path="list/:id" element={<Detailpage />} />
+    <BrowserRouter>
+      <NotificationContext.Provider value={{ updateNotifications, setUpdateNotifications }}>
+        <Layout>
+          <Routes>
+            <Route path='/'>
+              <Route index element={<Homepage />} />
+
+              <Route path='lists'>
+                <Route path='' element={<Homepage />} />
+                <Route path=':id' element={<Detailpage />} />
               </Route>
-              <Route path='/404' element={<Errorpage />} />
-            </Routes>
-          </Layout>
-        </NotificationContext.Provider>
-      </BrowserRouter>
-    </>
+
+              <Route path='404' element={<Errorpage />} />
+            </Route>
+          </Routes>
+        </Layout>
+      </NotificationContext.Provider>
+    </BrowserRouter>
   );
 }

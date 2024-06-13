@@ -18,7 +18,7 @@ function ListContainer() {
    */
   const getLists = () => {
     axios.get(url + '/api/lists').then(res => {
-      setLists(res.data);
+      setLists(res.data.lists);
     })
   }
 
