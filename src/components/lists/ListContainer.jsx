@@ -6,11 +6,18 @@ import List from './List';
 import Swal from 'sweetalert2';
 
 function ListContainer() {
-
   const [lists, setLists] = useState([]);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    getLists();
+    //getLists();
+    const cachedLists = localStorage.getItem('cachedLists');
+    if (cachedLists) {
+      setLists(JSON.parse(cachedLists));
+      setLoading(false);
+    } else {
+
+    }
   }, []);
 
   /**
