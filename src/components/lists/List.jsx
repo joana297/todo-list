@@ -4,14 +4,15 @@ import url from '../../BackendURL';
 import style from './List.module.scss';
 import ListItem from './ListItem';
 import Swal from 'sweetalert2';
+import { useNavigate } from 'react-router';
 
 function List(props) {
+    const navigate = useNavigate();
     const [list, setList] = useState({});
     const [listTitle, setListTitle] = useState("Meine neue Liste");
     const [listItems, setListItems] = useState([]);
 
     useEffect(() => {
-        console.log("HIER ", props.list);
         if (!props.new) {
             setList(props.list);
             setListTitle(props.list.title);
@@ -54,9 +55,14 @@ function List(props) {
      * gets all todo items for the list from db
      */
     const getListItems = () => {
-        axios.get(url + '/api/lists/' + list.id + '/todos').then(res => {
-            setListItems(res.data.todos);
-        })
+        axios.get(url + '/api/lists/' + list.id + '/todos')
+            .then(res => {
+                setListItems(res.data.todos);
+            })
+            .catch(error => {
+                console.error('Error fetching the todos:', error);
+                navigate('/404');
+            });
     }
 
     /**

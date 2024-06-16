@@ -20,7 +20,11 @@ function Detailpage() {
   const getList = () => {
     axios.get(url + '/api/lists/' + id)
       .then(res => {
-        (res.data?.list.length > 0) ? setList(res.data.list[0]) : navigate('/404')
+        setList(res.data.list[0]);
+      })
+      .catch(error => {
+        console.error('Error fetching the list:', error);
+        navigate('/404');
       });
   }
 

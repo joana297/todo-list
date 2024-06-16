@@ -4,11 +4,13 @@ import Notification from './Notification';
 import axios from 'axios';
 import url from '../../BackendURL';
 import { format } from 'date-fns';
+import { useNavigate } from 'react-router';
 
 export const NotificationContext = createContext(false);
 
 function ListItem(props) {
   const { updateNotifications, setUpdateNotifications } = useContext(NotificationContext);
+  const navigate = useNavigate();
 
   const [todo, setTodo] = useState({});
   const [todoText, setTodoText] = useState("");
@@ -59,9 +61,14 @@ function ListItem(props) {
      * gets all notifications for the todo item from db
      */
   const getNotifications = () => {
-    axios.get(url + '/api/lists/' + todo.list_id + '/todos/' + todo.id + '/notifications').then(res => {
-      setNotifications(res.data.notifications);
-    })
+    axios.get(url + '/api/lists/' + todo.list_id + '/todos/' + todo.id + '/notifications')
+      .then(res => {
+        setNotifications(res.data.notifications);
+      })
+      .catch(error => {
+        console.error('Error fetching the notifications:', error);
+        navigate('/404');
+      });
   }
 
   /**
@@ -119,7 +126,7 @@ function ListItem(props) {
         </section>
       </section>
       {notifications.map((item, key) => {
-        return <Notification notification={item} key={key} delete={deleteNotification} update={() => {getNotifications(); setUpdateNotifications(true);}} />
+        return <Notification notification={item} key={key} delete={deleteNotification} update={() => { getNotifications(); setUpdateNotifications(true); }} />
       })}
     </article>
   )
