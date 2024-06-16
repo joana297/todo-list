@@ -10,14 +10,13 @@ function ListContainer() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    //getLists();
-    const cachedLists = localStorage.getItem('cachedLists');
-    if (cachedLists) {
+    getLists();
+    
+    /*const cachedLists = localStorage.getItem('cachedLists'); //Todo
+    if (cachedLists) { 
       setLists(JSON.parse(cachedLists));
       setLoading(false);
-    } else {
-
-    }
+    }*/
   }, []);
 
   /**

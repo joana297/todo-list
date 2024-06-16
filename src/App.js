@@ -6,8 +6,6 @@ import Detailpage from "./screens/Detailpage";
 import Errorpage from "./screens/Errorpage";
 import { NotificationContext } from "./components/lists/ListItem";
 
-const CACHE_EXPIRATION_MS = 3600000; // 1 hour
-
 export default function App() {
 
   const [updateNotifications, setUpdateNotifications] = useState(false);
