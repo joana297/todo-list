@@ -12,13 +12,13 @@ export default function NotificationMessage(props) {
     const [formatedDate, setFormatedDate] = useState("");
 
     useEffect(() => {
+        setNotification(props.notification);
         axios.get(url + '/api/lists/' + props.notification.list_id).then((res) => {
-            setList(res.data[0]);
+            setList(res.data.list[0]);
         });
         axios.get(url + '/api/lists/' + props.notification.list_id + '/todos/' + props.notification.todo_id).then((res) => {
-            setTodo(res.data[0]);
+            setTodo(res.data.todo[0]);
         });
-        setNotification(props.notification);
         setFormatedDate(format(parseISO(props.notification.date_time), "dd.MM.yyyy' - 'HH:mm"))
     }, [props.notification]);
 

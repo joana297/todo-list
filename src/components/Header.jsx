@@ -15,20 +15,23 @@ function Header() {
 
   useEffect(() => {
     getNotifications();
+    setNotify(notifications.length != 0);
+  }, [notificationsOpen]);
 
+  useEffect(() => {
+    getNotifications();
+    setNotify(notifications.length != 0);
     setInterval(() => {
       setCurrentDateTime(new Date());
     }, 10000);
-
-    setNotify(notifications.length != 0);
-  }, [notificationsOpen, currentDateTime]);
+  }, [currentDateTime]);
 
   /**
    * gets all expired notifications from db
    */
   const getNotifications = () => {
     axios.get(url + '/api/notifications').then((res) => {
-      setNotifications(res.data.filter(elem => compareAsc(parseISO(elem.date_time), currentDateTime) === -1));
+      setNotifications(res.data.notifications.filter(elem => compareAsc(parseISO(elem.date_time), currentDateTime) === -1));
     });
   }
 
@@ -36,11 +39,7 @@ function Header() {
    * displays or hides the notifications container
    */
   const toggleNotifications = () => {
-    if (notificationsOpen) {
-      setNotificationsOpen(false);
-    } else {
-      setNotificationsOpen(true);
-    }
+    setNotificationsOpen(!notificationsOpen);
   }
 
   /**

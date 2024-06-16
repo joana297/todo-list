@@ -20,7 +20,7 @@ function Detailpage() {
   const getList = () => {
     axios.get(url + '/api/lists/' + id)
       .then(res => {
-        (res.data.list.length > 0) ? setList(res.data.list[0]) : navigate('/404')
+        (res.data?.list.length > 0) ? setList(res.data.list[0]) : navigate('/404')
       });
   }
 
@@ -51,12 +51,9 @@ function Detailpage() {
   }
 
   return (
-    <>
-      <h1>{list.title}</h1>
-      <section className='detailpage_wrapper'>
-        <List list={list} delete={deleteList} update={getList} />
-      </section>
-    </>
+    <article className='detailpage_wrapper'>
+      <List list={list} delete={deleteList} update={getList} />
+    </article>
   )
 }
 

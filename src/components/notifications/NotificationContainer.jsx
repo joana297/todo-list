@@ -31,7 +31,7 @@ function NotificationContainer(props) {
       cancelButtonColor: '#ff6a6a',
     }).then((result) => {
       if (result.isConfirmed) {
-        notifications.map(async notification => {
+        notifications.map(async (notification) => {
           await axios.delete(url + '/api/lists/' + notification.list_id + '/todos/' + notification.todo_id + '/notifications/' + notification.id)
             .then((res) => {
               console.log(res.data);
@@ -57,9 +57,8 @@ function NotificationContainer(props) {
 
   return (
     <section className={style.notification_container}>
-      {notifications.length === 0 ?
-        <p>Sie haben keine aktuellen Benachrichtigungen</p>
-        : <>
+      {notifications.length > 0 ?
+        <>
           <button type='button' onClick={deleteAllNotifications}>
             <span className="material-symbols-rounded">
               delete
@@ -75,7 +74,7 @@ function NotificationContainer(props) {
               )
             })}
           </section>
-        </>}
+        </> : <p>Sie haben keine aktuellen Benachrichtigungen</p>}
     </section>
   )
 }

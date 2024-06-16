@@ -60,7 +60,7 @@ function ListItem(props) {
      */
   const getNotifications = () => {
     axios.get(url + '/api/lists/' + todo.list_id + '/todos/' + todo.id + '/notifications').then(res => {
-      setNotifications(res.data);
+      setNotifications(res.data.notifications);
     })
   }
 

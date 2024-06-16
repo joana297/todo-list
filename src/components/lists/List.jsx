@@ -11,6 +11,7 @@ function List(props) {
     const [listItems, setListItems] = useState([]);
 
     useEffect(() => {
+        console.log("HIER ", props.list);
         if (!props.new) {
             setList(props.list);
             setListTitle(props.list.title);
@@ -54,7 +55,7 @@ function List(props) {
      */
     const getListItems = () => {
         axios.get(url + '/api/lists/' + list.id + '/todos').then(res => {
-            setListItems(res.data);
+            setListItems(res.data.todos);
         })
     }
 
@@ -64,7 +65,6 @@ function List(props) {
     const deleteListItem = async (todo) => {
         await axios.delete(url + '/api/lists/' + todo.list_id + '/todos/' + todo.id)
             .then((res) => {
-                console.log(res.data);
                 getListItems();
             });
     }
@@ -73,7 +73,7 @@ function List(props) {
      * creates a new todo item
      */
     const createNewListItem = async () => {
-        await axios.post(url + '/api/lists/' + list.id + '/todos',
+        await axios.post(url + '/api/lists/' + props.list.id + '/todos',
             {
                 text: 'New Todo'
             },
