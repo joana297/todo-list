@@ -7,7 +7,7 @@ import Swal from 'sweetalert2';
 
 function ListContainer() {
   const [lists, setLists] = useState([]);
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(true); 
 
   useEffect(() => {
     getLists();
