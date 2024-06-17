@@ -9,7 +9,7 @@ const urlsToCache = [
     '/static/media/list-top.0f9951ebec067a6e04e2.svg.svg'
 ];
 
-self.addEventListener('install', (event) => { //Todo: self oder this?
+this.addEventListener('install', (event) => { //Todo: self oder this?
     event.waitUntil(
         caches.open('my-app-cache')
             .then((cache) => {
@@ -30,18 +30,20 @@ this.addEventListener('activate', (event) => {
     );
 });
 
-self.addEventListener('fetch', (event) => {
-    event.respondWith(
-        caches.match(event.request)
-            .then((response) => {
-                return response || fetch(event.request).then(
-                    (response) => {
-                        caches.open('my-app-cache').then((cache) => {
-                            cache.put(event.request, response.clone());
+this.addEventListener('fetch', (event) => {
+    if (event.request.url.includes('/api/')) {
+        event.respondWith(
+            caches.match(event.request)
+                .then((response) => {
+                    return response || fetch(event.request).then(
+                        (response) => {
+                            caches.open('my-app-cache').then((cache) => {
+                                cache.put(event.request, response.clone());
+                            });
+                            return response;
                         });
-                        return response;
-                    });
-            }).catch(() => {
-                return caches.match('../src/images/fail.jpg');
-            }));
+                }).catch(() => {
+                    return caches.match('../src/images/fail.jpg');
+                }));
+    }
 });
