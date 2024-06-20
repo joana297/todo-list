@@ -4,7 +4,6 @@ import url from '../../BackendURL';
 import style from './List.module.scss';
 import ListItem from './ListItem';
 import Swal from 'sweetalert2';
-import { createList } from '../../util/listAPI';
 
 function List(props) {
     const [list, setList] = useState({});
