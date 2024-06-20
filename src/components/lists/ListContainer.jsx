@@ -12,6 +12,9 @@ function ListContainer() {
     getLists();
   }, []);
 
+  /**
+   * get all lists
+   */
   const getLists = () => {
     axios.get(url + '/api/lists')
       .then(res => {
@@ -19,7 +22,7 @@ function ListContainer() {
         localStorage.setItem('cachedLists', JSON.stringify(res.data.lists));
       }).catch(error => {
         console.log(error);
-        setLists(localStorage.getItem('cachedLists'));
+        setLists(JSON.parse(localStorage.getItem('cachedLists')));
       })
   }
 
