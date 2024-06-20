@@ -59,6 +59,7 @@ function Header() {
       <i className={'material-symbols-rounded ' + style.icon} onClick={toggleMenu}>
         menu
       </i>
+      <h1>My Todo App</h1>
       <i className={'material-symbols-rounded ' + style.icon + (notificationsOpen ? ' ' + style.open : "") + (notify ? ' ' + style.notify : "")} onClick={toggleNotifications}>
         notifications
       </i>

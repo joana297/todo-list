@@ -55,16 +55,16 @@ function ListContainer() {
   }
 
   return (
-    <section className={style.list_container}>
-      <div className={style.overflow_container}>
+    <article className={style.list_container}>
+      <section className={style.overflow_container}>
         {lists.map((list, key) => {
           return (
             <List list={list} key={key} delete={deleteList} update={getLists} />
           )
         })}
         <List new update={getLists} />
-      </div>
-    </section>
+      </section>
+    </article>
   )
 }
 

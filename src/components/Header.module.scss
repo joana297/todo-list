@@ -37,6 +37,11 @@ header {
             }
         }
     }
+
+    >h1 {
+        max-width: 230px;
+        margin-top: -8px;
+    }
 }
 
 @keyframes ring {
