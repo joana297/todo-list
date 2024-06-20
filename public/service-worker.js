@@ -9,7 +9,7 @@ const urlsToCache = [
     '/static/media/list-top.0f9951ebec067a6e04e2.svg.svg'
 ];
 
-this.addEventListener('install', (event) => { //Todo: self oder this?
+this.addEventListener('install', (event) => {
     event.waitUntil(
         caches.open('my-app-cache')
             .then((cache) => {
