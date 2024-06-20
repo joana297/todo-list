@@ -7,25 +7,20 @@ import Swal from 'sweetalert2';
 
 function ListContainer() {
   const [lists, setLists] = useState([]);
-  const [loading, setLoading] = useState(true); 
 
   useEffect(() => {
     getLists();
-    
-    /*const cachedLists = localStorage.getItem('cachedLists'); //Todo
-    if (cachedLists) { 
-      setLists(JSON.parse(cachedLists));
-      setLoading(false);
-    }*/
   }, []);
 
-  /**
-   * gets all lists from db
-   */
   const getLists = () => {
-    axios.get(url + '/api/lists').then(res => {
-      setLists(res.data.lists);
-    })
+    axios.get(url + '/api/lists')
+      .then(res => {
+        setLists(res.data.lists);
+        localStorage.setItem('cachedLists', JSON.stringify(res.data.lists));
+      }).catch(error => {
+        console.log(error);
+        setLists(localStorage.getItem('cachedLists'));
+      })
   }
 
   /**
@@ -47,7 +42,12 @@ function ListContainer() {
       if (result.isConfirmed) {
         await axios.delete(url + '/api/lists/' + list.id)
           .then((res) => {
-            console.log(res.data);
+            getLists();
+          })
+          .catch(error => {
+            console.log("An error occured: ", error);
+            var remList = lists.filter(l => l.id != list.id);
+            localStorage.setItem('cachedLists', JSON.stringify(remList));
             getLists();
           });
       }
