@@ -8,30 +8,49 @@ import Swal from 'sweetalert2';
 function Detailpage() {
   const navigate = useNavigate();
   const { id } = useParams();
+
+  const [lists, setLists] = useState([]);
   const [list, setList] = useState([]);
 
   useEffect(() => {
-    getList();
+    getLists();
+  }, []);
+
+  useEffect(() => {
+    getLists();
   }, [id]);
 
   /**
-   * gets the list thats specified by the id in the url
+   * get all lists
+   */
+  const getLists = () => {
+    axios.get(url + '/api/lists')
+      .then(res => {
+        setLists(res.data.lists);
+        localStorage.setItem('cachedLists', JSON.stringify(res.data.lists));
+      }).catch(error => {
+        console.log(error);
+        setLists(JSON.parse(localStorage.getItem('cachedLists')));
+      })
+  }
+
+  /**
+   * get all list by id
    */
   const getList = () => {
     axios.get(url + '/api/lists/' + id)
       .then(res => {
-        setList(res.data.list[0]);
+        setList(res.data.list);
+      }).catch(error => {
+        console.log(error);
+        setList(lists.filter(l => l.id == id)[0]);
       })
-      .catch(error => {
-        console.error('Error fetching the list:', error);
-        navigate('/404');
-      });
   }
 
   /**
    * deletes a list by its id
    */
-  const deleteList = async () => {
+  const deleteList = async (list) => {
     Swal.fire({
       position: 'center',
       icon: 'warning',
@@ -47,7 +66,12 @@ function Detailpage() {
       if (result.isConfirmed) {
         await axios.delete(url + '/api/lists/' + list.id)
           .then((res) => {
-            console.log(res.data);
+            navigate('/');
+          })
+          .catch(error => {
+            console.log("An error occured: ", error);
+            var remList = lists.filter(l => l.id != list.id);
+            localStorage.setItem('cachedLists', JSON.stringify(remList));
             navigate('/');
           });
       }
