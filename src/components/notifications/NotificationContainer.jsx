@@ -34,8 +34,14 @@ function NotificationContainer(props) {
         notifications.map(async (notification) => {
           await axios.delete(url + '/api/lists/' + notification.list_id + '/todos/' + notification.todo_id + '/notifications/' + notification.id)
             .then((res) => {
-              console.log(res.data);
               setUpdateNotifications(true);
+              props.update();
+            })
+            .catch(error => {
+              console.log(error);
+              var allNotifications = JSON.parse(localStorage.getItem('cachedNotifications'));
+              var remList = allNotifications.filter(n => n.id != notification.id);
+              localStorage.setItem('cachedNotifications', JSON.stringify(remList));
               props.update();
             });
         });
@@ -43,14 +49,21 @@ function NotificationContainer(props) {
     });
   }
 
+
   /**
    * deletes an expired notification by its id
    */
   const deleteNotification = async (notification) => {
     await axios.delete(url + '/api/lists/' + notification.list_id + '/todos/' + notification.todo_id + '/notifications/' + notification.id)
       .then((res) => {
-        console.log(res.data);
         setUpdateNotifications(true);
+        props.update();
+      })
+      .catch(error => {
+        console.log(error);
+        var allNotifications = JSON.parse(localStorage.getItem('cachedNotifications'));
+        var remList = allNotifications.filter(n => n.id != notification.id);
+        localStorage.setItem('cachedNotifications', JSON.stringify(remList));
         props.update();
       });
   }

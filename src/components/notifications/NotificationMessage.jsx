@@ -3,10 +3,8 @@ import style from './NotificationMessage.module.scss';
 import axios from 'axios';
 import url from '../../BackendURL';
 import { format, parseISO } from 'date-fns';
-import { useNavigate } from 'react-router';
 
 export default function NotificationMessage(props) {
-    const navigate = useNavigate();
 
     const [list, setList] = useState({});
     const [todo, setTodo] = useState({});
@@ -15,14 +13,16 @@ export default function NotificationMessage(props) {
 
     useEffect(() => {
         setNotification(props.notification);
+        setFormatedDate(format(parseISO(props.notification.date_time), "dd.MM.yyyy' - 'HH:mm"));
 
         axios.get(url + '/api/lists/' + props.notification.list_id)
             .then((res) => {
                 setList(res.data.list[0]);
             })
             .catch(error => {
-                console.error('Error fetching the list:', error);
-                navigate('/404');
+                console.error(error);
+                var allLists = JSON.parse(localStorage.getItem('cachedLists'));
+                setList(allLists.filter(l => l.id == props.notification.list_id)[0]);
             });
 
         axios.get(url + '/api/lists/' + props.notification.list_id + '/todos/' + props.notification.todo_id)
@@ -31,10 +31,9 @@ export default function NotificationMessage(props) {
             })
             .catch(error => {
                 console.error('Error fetching the todo:', error);
-                navigate('/404');
+                var allTodos = JSON.parse(localStorage.getItem('cachedTodos'));
+                setList(allTodos.filter(l => l.id == props.notification.todo_id)[0]);
             });
-            
-        setFormatedDate(format(parseISO(props.notification.date_time), "dd.MM.yyyy' - 'HH:mm"))
     }, [props.notification]);
 
     return (

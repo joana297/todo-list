@@ -9,17 +9,20 @@ import Menu from './menu/Menu';
 function Header() {
   const [notificationsOpen, setNotificationsOpen] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
+
+  const [allNotifications, setAllNotifications] = useState([]);
   const [notifications, setNotifications] = useState([]);
+
   const [currentDateTime, setCurrentDateTime] = useState(new Date());
   const [notify, setNotify] = useState(false);
 
   useEffect(() => {
-    getNotifications();
+    getAllNotifications();
     setNotify(notifications.length != 0);
   }, [notificationsOpen]);
 
   useEffect(() => {
-    getNotifications();
+    getAllNotifications();
     setNotify(notifications.length != 0);
     setInterval(() => {
       setCurrentDateTime(new Date());
@@ -27,13 +30,31 @@ function Header() {
   }, [currentDateTime]);
 
   /**
-   * gets all expired notifications from db
-   */
-  const getNotifications = () => {
-    axios.get(url + '/api/notifications').then((res) => {
-      setNotifications(res.data.notifications.filter(elem => compareAsc(parseISO(elem.date_time), currentDateTime) === -1));
-    });
+    * gets all notifications & puts it in cache
+    */
+  const getAllNotifications = () => {
+    axios.get(url + '/api/notifications')
+      .then(res => {
+        setAllNotifications(res.data.notifications);
+        var data = res.data.notifications.filter(elem => compareAsc(parseISO(elem.date_time), currentDateTime) === -1);
+        setNotifications(data);
+      })
+      .catch(error => {
+        console.log(error);
+        var allNots = JSON.parse(localStorage.getItem('cachedNotifications'));
+        var data = allNots.filter(elem => compareAsc(parseISO(elem.date_time), currentDateTime) === -1);
+        setNotifications(data);
+      });
   }
+
+  /**
+   * checks which notifications are active
+   */
+  const checkNotifications = () => {
+    const now = new Date();
+    const activeNotifications = allNotifications.filter(notification => notification.date_time > now);
+    setNotifications(activeNotifications);
+  };
 
   /**
    * displays or hides the notifications container
@@ -64,7 +85,7 @@ function Header() {
         notifications
       </i>
       {notificationsOpen ?
-        <NotificationContainer notifications={notifications} update={getNotifications} />
+        <NotificationContainer notifications={notifications} update={getAllNotifications} />
         : ""}
       <Menu toggle={toggleMenu} menuOpen={menuOpen} />
     </header>
