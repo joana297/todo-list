@@ -18,7 +18,7 @@ function List(props) {
             setList(props.list);
             setListTitle(props.list.title);
         }
-    }, []);
+    }, [props.list]);
 
     useEffect(() => {
         getTodos();
@@ -96,7 +96,7 @@ function List(props) {
                     }
                 });
                 localStorage.setItem('cachedLists', JSON.stringify(allLists));
-            })
+            });
     }
 
     /**
@@ -136,7 +136,12 @@ function List(props) {
                 getTodos();
             }).catch(error => {
                 console.log(error);
-                var data = { id: allTodos[allTodos.length - 1].id + 1, text: 'New Todo' }
+                var data = {
+                    id: allTodos[allTodos.length - 1].id + 1,
+                    list_id: list.id,
+                    text: 'New Todo',
+                    is_done: 0
+                }
                 allTodos.push(data);
                 localStorage.setItem('cachedTodos', JSON.stringify(allTodos));
             })
@@ -145,7 +150,7 @@ function List(props) {
     /**
    * deletes a todo item from the list by its id
    */
-    const deleteNewTodo = async (todo) => {
+    const deleteTodo = async (todo) => {
         await axios.delete(url + '/api/lists/' + todo.list_id + '/todos/' + todo.id)
             .then((res) => {
                 getTodos();
@@ -193,7 +198,7 @@ function List(props) {
 
                 <section className={style.list_item_wrapper}>
                     {todos.map((item, key) => {
-                        return <ListItem todo={item} key={key} delete={deleteNewTodo} update={getTodos} />
+                        return <ListItem todo={item} key={key} delete={deleteTodo} update={getTodos} />
                     })}
                 </section>
 

@@ -9,28 +9,28 @@ function Detailpage() {
   const navigate = useNavigate();
   const { id } = useParams();
 
-  const [lists, setLists] = useState([]);
+  const [allLists, setAllLists] = useState([]);
   const [list, setList] = useState([]);
 
   useEffect(() => {
-    getLists();
+    getAllLists();
   }, []);
 
   useEffect(() => {
-    getLists();
+    getList();
   }, [id]);
 
   /**
    * get all lists
    */
-  const getLists = () => {
+  const getAllLists = () => {
     axios.get(url + '/api/lists')
       .then(res => {
-        setLists(res.data.lists);
-        localStorage.setItem('cachedLists', JSON.stringify(res.data.lists));
+        setAllLists(res.data.lists);
+        //localStorage.setItem('cachedLists', JSON.stringify(res.data.lists));
       }).catch(error => {
         console.log(error);
-        setLists(JSON.parse(localStorage.getItem('cachedLists')));
+        setAllLists(JSON.parse(localStorage.getItem('cachedLists')));
       })
   }
 
@@ -40,10 +40,10 @@ function Detailpage() {
   const getList = () => {
     axios.get(url + '/api/lists/' + id)
       .then(res => {
-        setList(res.data.list);
+        setList(res.data.list[0]);
       }).catch(error => {
         console.log(error);
-        setList(lists.filter(l => l.id == id)[0]);
+        setList(allLists.filter(l => l.id == id)[0]);
       })
   }
 
@@ -70,7 +70,7 @@ function Detailpage() {
           })
           .catch(error => {
             console.log("An error occured: ", error);
-            var remList = lists.filter(l => l.id != list.id);
+            var remList = allLists.filter(l => l.id != list.id);
             localStorage.setItem('cachedLists', JSON.stringify(remList));
             navigate('/');
           });

@@ -2,6 +2,7 @@ const urlsToCache = [
     '/',
     '/index.html',
     '/lists',
+    '/lists/*',
     '/404',
     '/static/css/main.5c0b1687.css',
     '/static/js/main.51dbcccc.js',
