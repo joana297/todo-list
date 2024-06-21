@@ -6,6 +6,7 @@ const urlsToCache = [
     '/404',
     '/static/css/main.5c0b1687.css',
     '/static/js/main.51dbcccc.js',
+    //'/static/js/bundle.js',
     '/static/media/list-bottom.09e86ceb44b010591d14.svg',
     '/static/media/list-mid.27c0231770dbb081c1bf.svg',
     '/static/media/list-top.0f9951ebec067a6e04e2.svg.svg'
@@ -22,19 +23,28 @@ this.addEventListener('install', (event) => {
 });
 
 this.addEventListener('fetch', (event) => {
-    event.respondWith(
-        caches.match(event.request)
-            .then((response) => {
-                return response || fetch(event.request)
-                    .then(
-                        (response) => {
-                            caches.open('my-app-cache').then((cache) => {
-                                cache.put(event.request, response.clone());
-                            }); return response;
+    //if (event.request.method === 'GET') {
+        event.respondWith(
+            caches.match(event.request)
+                .then((cachedResponse) => {
+                    if (cachedResponse) {
+                        return cachedResponse;
+                    }
+
+                    return fetch(event.request).then((networkResponse) => {
+                        let responseClone = networkResponse.clone();
+
+                        caches.open('my-app-cache').then((cache) => {
+                            cache.put(event.request, responseClone);
                         });
-            }).catch(() => {
-                return caches.match('/404');
-            }));
+
+                        return networkResponse;
+                    });
+                }).catch(() => {
+                    return caches.match('/404');
+                })
+        );
+    //}
 });
 
 this.addEventListener('activate', (event) => {

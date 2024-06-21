@@ -31,8 +31,8 @@ function NotificationContainer(props) {
       cancelButtonColor: '#ff6a6a',
     }).then((result) => {
       if (result.isConfirmed) {
-        notifications.map(async (notification) => {
-          await axios.delete(url + '/api/lists/' + notification.list_id + '/todos/' + notification.todo_id + '/notifications/' + notification.id)
+        notifications.map((notification) => {
+          axios.delete(url + '/api/lists/' + notification.list_id + '/todos/' + notification.todo_id + '/notifications/' + notification.id)
             .then((res) => {
               setUpdateNotifications(true);
               props.update();
@@ -53,8 +53,8 @@ function NotificationContainer(props) {
   /**
    * deletes an expired notification by its id
    */
-  const deleteNotification = async (notification) => {
-    await axios.delete(url + '/api/lists/' + notification.list_id + '/todos/' + notification.todo_id + '/notifications/' + notification.id)
+  const deleteNotification = (notification) => {
+    axios.delete(url + '/api/lists/' + notification.list_id + '/todos/' + notification.todo_id + '/notifications/' + notification.id)
       .then((res) => {
         setUpdateNotifications(true);
         props.update();

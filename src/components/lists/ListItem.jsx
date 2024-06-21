@@ -20,9 +20,6 @@ function ListItem(props) {
 
   useEffect(() => {
     getAllNotifications();
-  }, []);
-
-  useEffect(() => {
     setTodo(props.todo);
     setTodoText(props.todo.text);
     setIsDone(props.todo.is_done);
@@ -101,8 +98,8 @@ function ListItem(props) {
   /**
     * updates the text & status of the todo
     */
-  const updateTodo = async (done, text) => {
-    await axios.put(url + '/api/lists/' + todo.list_id + '/todos/' + todo.id,
+  const updateTodo = (done, text) => {
+    axios.put(url + '/api/lists/' + todo.list_id + '/todos/' + todo.id,
       {
         text: text ?? todoText,
         is_done: done
@@ -127,8 +124,8 @@ function ListItem(props) {
   /**
    * creates a new notification for the todo item
    */
-  const createNewNotification = async () => {
-    await axios.post(url + '/api/lists/' + todo.list_id + '/todos/' + todo.id + '/notifications',
+  const createNewNotification = () => {
+    axios.post(url + '/api/lists/' + todo.list_id + '/todos/' + todo.id + '/notifications',
       {
         date_time: format(new Date(), "yyyy-MM-dd'T'HH:mm")
       }, { headers: { 'Content-Type': 'application/json' } })
@@ -156,8 +153,8 @@ function ListItem(props) {
   /**
   * deletes a notification from the todo item by its id
   */
-  const deleteNotification = async (notification) => {
-    await axios.delete(url + '/api/lists/' + notification.list_id + '/todos/' + notification.todo_id + '/notifications/' + notification.id)
+  const deleteNotification = (notification) => {
+    axios.delete(url + '/api/lists/' + notification.list_id + '/todos/' + notification.todo_id + '/notifications/' + notification.id)
       .then((res) => {
         getNotifications();
       })

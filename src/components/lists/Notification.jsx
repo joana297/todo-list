@@ -15,8 +15,8 @@ function Notification(props) {
   /**
     * updates the text & status of the todo
     */
-  const updateNotification = async () => {
-    await axios.put(url + '/api/lists/' + notification.list_id + '/todos/' + notification.todo_id + '/notifications/' + notification.id,
+  const updateNotification = () => {
+    axios.put(url + '/api/lists/' + notification.list_id + '/todos/' + notification.todo_id + '/notifications/' + notification.id,
       {
         date_time: datetime
       },

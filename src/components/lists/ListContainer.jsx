@@ -29,7 +29,7 @@ function ListContainer() {
   /**
    * deletes a list by its id
    */
-  const deleteList = async (list) => {
+  const deleteList = (list) => {
     Swal.fire({
       position: 'center',
       icon: 'warning',
@@ -41,9 +41,9 @@ function ListContainer() {
       showCancelButton: true,
       cancelButtonText: 'Nein',
       cancelButtonColor: '#ff6a6a',
-    }).then(async (result) => {
+    }).then((result) => {
       if (result.isConfirmed) {
-        await axios.delete(url + '/api/lists/' + list.id)
+        axios.delete(url + '/api/lists/' + list.id)
           .then((res) => {
             getLists();
           })

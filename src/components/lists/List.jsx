@@ -78,8 +78,8 @@ function List(props) {
     /**
      * updates the title of the list
      */
-    const updateListTitle = async (title) => {
-        await axios.put(url + '/api/lists/' + list.id,
+    const updateListTitle = (title) => {
+        axios.put(url + '/api/lists/' + list.id,
             {
                 title: title ?? listTitle
             }, { headers: { 'Content-Type': 'application/json' } })
@@ -102,8 +102,8 @@ function List(props) {
     /**
      * creates a new list
      */
-    const createNewList = async () => {
-        await axios.post(url + '/api/lists',
+    const createNewList = () => {
+        axios.post(url + '/api/lists',
             {
                 title: listTitle
             }, { headers: { 'Content-Type': 'application/json' } })
@@ -123,8 +123,8 @@ function List(props) {
     /**
      * creates a new todo item
      */
-    const createNewTodo = async () => {
-        await axios.post(url + '/api/lists/' + list.id + '/todos',
+    const createNewTodo = () => {
+        axios.post(url + '/api/lists/' + list.id + '/todos',
             {
                 text: 'New Todo'
             },
@@ -150,8 +150,8 @@ function List(props) {
     /**
    * deletes a todo item from the list by its id
    */
-    const deleteTodo = async (todo) => {
-        await axios.delete(url + '/api/lists/' + todo.list_id + '/todos/' + todo.id)
+    const deleteTodo = (todo) => {
+        axios.delete(url + '/api/lists/' + todo.list_id + '/todos/' + todo.id)
             .then((res) => {
                 getTodos();
             })

@@ -48,15 +48,6 @@ function Header() {
   }
 
   /**
-   * checks which notifications are active
-   */
-  const checkNotifications = () => {
-    const now = new Date();
-    const activeNotifications = allNotifications.filter(notification => notification.date_time > now);
-    setNotifications(activeNotifications);
-  };
-
-  /**
    * displays or hides the notifications container
    */
   const toggleNotifications = () => {
