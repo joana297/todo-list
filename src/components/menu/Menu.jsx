@@ -16,9 +16,16 @@ function Menu(props) {
    * gets all lists from db
    */
   const getAllLists = () => {
-    axios.get(url + '/api/lists').then((res) => {
-      setLists(res.data.lists);
-    });
+    axios.get(url + '/api/lists')
+      .then(res => {
+        setLists(res.data.lists);
+      }).catch(error => {
+        console.log(error);
+        var cachedLists = localStorage.getItem('cachedLists');
+        if (cachedLists) {
+          setLists(JSON.parse(cachedLists));
+        }
+      });
   }
 
   /**
