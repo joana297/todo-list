@@ -2,7 +2,7 @@ const urlsToCache = [
     '/',
     '/index.html',
     '/lists',
-    '/lists/*',
+    //'/lists/*',
     '/404',
     '/static/css/main.5c0b1687.css',
     '/static/js/main.51dbcccc.js',
@@ -26,17 +26,13 @@ this.addEventListener('fetch', (event) => {
     event.respondWith(
         caches.match(event.request)
             .then((response) => {
-                return response || fetch(event.request).then((networkResponse) => {
-                    if (!networkResponse || networkResponse.status !== 200) {
-                        return networkResponse;
-                    }
-                    const responseToCache = networkResponse.clone();
-                    caches.open('my-app-cache')
-                        .then((cache) => {
-                            cache.put(event.request, responseToCache);
+                return response || fetch(event.request)
+                    .then(
+                        (response) => {
+                            caches.open('my-app-cache').then((cache) => {
+                                cache.put(event.request, response.clone());
+                            }); return response;
                         });
-                    return networkResponse;
-                })
             }).catch(() => {
                 return caches.match('/404');
             }));
