@@ -6,7 +6,6 @@ const urlsToCache = [
     '/404',
     '/static/css/main.5c0b1687.css',
     '/static/js/main.51dbcccc.js',
-    '/fail.jpg',
     '/static/media/list-bottom.09e86ceb44b010591d14.svg',
     '/static/media/list-mid.27c0231770dbb081c1bf.svg',
     '/static/media/list-top.0f9951ebec067a6e04e2.svg.svg'

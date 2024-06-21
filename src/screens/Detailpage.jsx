@@ -40,10 +40,19 @@ function Detailpage() {
   const getList = () => {
     axios.get(url + '/api/lists/' + id)
       .then(res => {
-        setList(res.data.list[0]);
+        console.log(res);
+        if (res.status === 404) {
+          navigate('/404');
+        } else {
+          setList(res.data.list[0]);
+        }
       }).catch(error => {
         console.log(error);
-        setList(allLists.filter(l => l.id == id)[0]);
+        if (error.response.status === 404) {
+          navigate('/404');
+        } else {
+          setList(allLists.filter(l => l.id == id)[0]);
+        }
       })
   }
 
